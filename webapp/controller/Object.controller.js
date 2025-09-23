@@ -306,8 +306,18 @@ sap.ui.define([
 			var sPmntMeth = oEvent.getParameter("selectedItem").getDescription(),
 				oViewModel = this._oViewModel;
 			oViewModel.setProperty("/dispMethod", sPmntMeth);
-			this._getPmntMethods(this._mainPmntProc);
+			//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{
+			//this._getPmntMethods(this._mainPmntProc);
+			this._getBonMethods(this._mainPmntProc); //}
 		},
+		//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{
+		_handleBonMethConfirm: function(oEvent) {
+			var sPmntMeth = oEvent.getParameter("selectedItem").getDescription(),
+				oViewModel = this._oViewModel;
+			oViewModel.setProperty("/bonMethod", sPmntMeth);
+			this._getPmntMethods(this._mainPmntProc);
+		}, // }
+
 		_handlePmntMethConfirm: function(oEvent, bContinue, sMeth) {
 			var sPmntMeth = bContinue ? sMeth : oEvent.getParameter("selectedItem").getDescription(),
 				oContext = this.getView().getBindingContext(),

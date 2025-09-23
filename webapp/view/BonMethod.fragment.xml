@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m">
-	<SelectDialog noDataText="{i18n>NoPmntMethFound}" title="{i18n>SelectPmntMethDisp}" confirm="_handleDispMethConfirm"
+	<SelectDialog noDataText="{i18n>NoPmntMethFound}" title="{i18n>SelectPmntMethDisp}" confirm="_handleBonMethConfirm"
 		items="{ path: 'dsipPmntMethods>/results/', sorter: { path: 'Value' }, templateShareable : false }">
 		<StandardListItem title="{dsipPmntMethods>Value}" description="{dsipPmntMethods>Key}" 
 		visible="{= ${dsipPmntMethods>Key} === 'M' || ${dsipPmntMethods>Key} === 'E' ? false : true }"
