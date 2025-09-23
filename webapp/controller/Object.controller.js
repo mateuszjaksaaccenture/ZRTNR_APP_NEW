@@ -388,6 +388,8 @@ sap.ui.define([
 				this.getModel("addData").updateBindings();
 			}
 			//      this.getModel().updateBindings();
+
+            this._openBonDialog(); //P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{}
 			this.returnCreate(oContext);
 		},
 		_openPmntDialog: function() {
