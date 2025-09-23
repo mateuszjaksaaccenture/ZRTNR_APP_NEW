@@ -1,4 +1,4 @@
-Ysap.ui.define([
+sap.ui.define([
 	"cre/ret/app/controller/BaseController",
 	"sap/ui/model/json/JSONModel"
 ], function(BaseController, JSONModel) {
