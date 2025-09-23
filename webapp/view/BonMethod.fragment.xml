@@ -2,7 +2,7 @@
 	<SelectDialog noDataText="{i18n>NoPmntMethFound}" title="{i18n>SelectBonMethDisp}" confirm="_handleBonMethConfirm"
 		items="{ path: 'dsipPmntMethods>/results/', sorter: { path: 'Value' }, templateShareable : false }">
 		<StandardListItem title="{dsipPmntMethods>Value}" description="{dsipPmntMethods>Key}" 
-		visible="{= ${dsipPmntMethods>Key} === 'M' || ${dsipPmntMethods>Key} === 'E' ? false : true }"
+		visible="{= ${dsipPmntMethods>Key} === 'M' || ${dsipPmntMethods>Key} === 'E' || ${dsipPmntMethods>Key} === 'B' ? false : true }"
 		icon="sap-icon://wallet" iconDensityAware="false" iconInset="false" type="Active"/>
 	</SelectDialog>
 </core:FragmentDefinition>
