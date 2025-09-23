@@ -268,7 +268,7 @@ sap.ui.define([
 					this._openDispPmntDialog();
 				}
 				//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{}
-				else if( oViewModel.getProperty("/bonMethod") == '' ) {
+				else if( oViewModel.getProperty("/bonMethod") == '?' ) {
 					this._openBonDialog();
 				} 
 				else {

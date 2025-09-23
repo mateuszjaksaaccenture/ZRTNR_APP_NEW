@@ -416,11 +416,13 @@ sap.ui.define([
 
 					var oBalance = oData.MethodToMethod.results.find(findBalance),
 						oEmergBalance = oData.MethodToMethod.results.find(findEmergFunds),
-						oWarning = oData.MethodToMethod.results.find(checkWarning);
+						oWarning = oData.MethodToMethod.results.find(checkWarning),
+						oBon = oData.MethodToMethod.results.find(findBon); //P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{}
 
 					oViewModel.setProperty("/emergencyFund", parseFloat(oEmergBalance.Value));
 					oViewModel.setProperty("/shopBalance", parseFloat(oBalance.Value));
-					oViewModel.setProperty("/noAccountDoc", oWarning ? true : false);
+					oViewModel.setProperty("/noAccountDoc", oWarning ? true : false); 
+					oViewModel.setProperty("/bonMethod", oBon.Value); 
 				}
 
 				oViewModel.setProperty("/pmntLevel", oData.Key);
