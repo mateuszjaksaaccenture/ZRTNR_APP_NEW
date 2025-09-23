@@ -407,6 +407,12 @@ sap.ui.define([
 								return element;
 							}
 						};
+						//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{
+						findBon = function(element) {
+							if (element.Key === "B") {
+								return element;
+							}
+						}; //}				
 
 					var oBalance = oData.MethodToMethod.results.find(findBalance),
 						oEmergBalance = oData.MethodToMethod.results.find(findEmergFunds),

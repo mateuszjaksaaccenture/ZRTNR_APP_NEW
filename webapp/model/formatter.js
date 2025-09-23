@@ -1,2 +1,530 @@
-sap.ui.define(["sap/ui/model/json/JSONModel"],function(e){"use strict";return{numberUnit:function(e){if(!e){return""}return parseFloat(e).toFixed(2)},objectHeaderNumberUnit:function(e,t){if(e&&t){var r=[];r.push(t);r.push("PLN");var o=new sap.ui.model.type.Currency({showMeasure:false});return e+": "+o.formatValue(r,"string")}},parseQuantity:function(e){return parseInt(e,10)},_formatTargetQuantity:function(e){var t={precision:13,shortDecimals:3,decimalSeparator:"."};var r={precision:13,scale:3};var o=new sap.ui.model.odata.type.Decimal(t,r);return o.formatValue(e,"string")},fillObject:function(e,t){if(e&&t){e.Invoice=t.Invoice;e.Name=t.Name;e.Name2=t.Name2;e.Name3=t.Name3;e.Name4=t.Name4;e.Street=t.Street;e.HouseNo=t.HouseNo;e.City=t.City;e.Country=t.Country;e.EMail=t.EMail;e.ZzpersId=t.ZzpersId;e.Taxnumber1=t.Taxnumber1;e.Tel1Numbr=t.Tel1Numbr;e.PostlCod1=t.PostlCod1;e.Iban=t.Iban;e.Remarks=t.Remarks;e.PoczetFvRemark=t.PoczetFvRemark}return e},_setInitialCustomerData:function(t){return new e({Invoice:t.Invoice,Name:t.Name,Name2:t.Name2,Name3:t.Name3,Name4:t.Name4,Street:t.Street,HouseNo:t.HouseNo,City:t.City,Country:t.Country||"PL",EMail:t.EMail,ZzpersId:t.ZzpersId,Taxnumber1:t.Taxnumber1,Tel1Numbr:t.Tel1Numbr,PostlCod1:t.PostlCod1,Iban:t.Iban,Remarks:t.Remarks,PoczetFvRemark:t.PoczetFvRemark})},_setInitialAccData:function(t){return new e({AccountId:"",Name:t})},_getFromFields:function(e){var t=[];var r=e.getContent();var o;for(var n=0;n<r.length;n++){o=r[n].getMetadata().getName();if(o==="sap.m.Input"||o==="sap.m.FlexBox"||o==="sap.m.MaskInput"){if(o==="sap.m.FlexBox"){t=this._addFromFlexBox(t,r[n])}else{t.push({control:r[n],required:r[n-1].getRequired&&r[n-1].getRequired()})}}}return t},_addFromFlexBox:function(e,t){var r=t.getItems();for(var o=0;o<r.length;o++){e.push({control:r[o],required:true})}return e},_validateEmail:function(e){var t=e.getParameter("value"),r=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);if(!t){e.getSource().setValueState("None")}else if(!t.match(r)){e.getSource().setValueState("Error")}else{e.getSource().setValueState("None")}},_setType:function(e){switch(e){case"E":return sap.ui.core.MessageType.Error;case"W":return sap.ui.core.MessageType.Warning;case"S":return sap.ui.core.MessageType.Success;case"I":return sap.ui.core.MessageType.Information}},_fillDeepData:function(e,t){var r=e;if(r.NoSapInvoice||r.InvoiceIsExt){r.Invoice="00000000"}r.DocToItem=t;r.DocToBapi=[{Id:"",Number:"",Row:0,Field:""}];r.RtrnToMsg=[{ReturnDoc:""}];return r},_fillNoRefDeepData:function(e,t){if(!e.Invoice){e.Invoice="00000000"}var r={Invoice:e.Invoice,SalesDoc:e.SalesOrder,CustNum:e.CustomerNumber,NoSapInvoice:true,InvoiceIsExt:true,IsAgentProc:e.IsAgentProc,Zlsch:e.Zlsch};if(e.Bstdk){var o=36e5*2;e.Bstdk=new Date(e.Bstdk.getTime()+o)}for(var n=0;n<e.DocToItem.length;n++){e.DocToItem[n].ItmNumber=this._generateItmNumber(n);e.DocToItem[n].Name=e.SupplierName;e.DocToItem[n].Name2=e.Name2;e.DocToItem[n].Name3=e.Name3;e.DocToItem[n].Name4=e.Name4;e.DocToItem[n].Bstdk=e.Bstdk;e.DocToItem[n].City=e.City;e.DocToItem[n].Country=e.Country;e.DocToItem[n].HouseNo=e.HouseNumber;e.DocToItem[n].PostlCod1=e.ZIPCode;e.DocToItem[n].Street=e.Street;e.DocToItem[n].SalesDoc=e.SalesOrder;e.DocToItem[n].Invoice=e.Invoice;e.DocToItem[n].PoQuan=parseFloat(e.DocToItem[n].PoQuan).toFixed(3);e.DocToItem[n].Werks=t;e.DocToItem[n].Iban=e.Iban;e.DocToItem[n].Remarks=e.Remarks;e.DocToItem[n].RetReason=e.RetReason;if(e.DocToItem[n].BruttoValue instanceof Array){e.DocToItem[n].BruttoValue=e.DocToItem[n].BruttoValue[0].toFixed(2)}else{e.DocToItem[n].BruttoValue=e.DocToItem[n].BruttoValue}if(e.DocToItem[n].BruttoValue>0&&(e.Zlsch==="P"||e.Zlsch==="R")){r.IsDisposition=true}}r.DocToItem=e.DocToItem;r.DocToBapi=e.DocToBapi;r.RtrnToMsg=e.RtrnToMsg;return r},calculateReturn:function(e,t,r){var o=parseFloat(e)+parseFloat(t);return o.toFixed(2)+" "+r},_calculateAddPrice:function(e){var t=0;for(var r=0;r<e.length;r++){if(e[r].getBindingContext("addData").getObject().BruttoValue){t=(parseFloat(t)+parseFloat(e[r].getBindingContext("addData").getObject().BruttoValue)).toFixed(2)}}return parseFloat(t).toFixed(2)},_generateItmNumber:function(e){var t=(e+1).toString()+"0",r=6-t.length,o="";for(var n=0;n<r;n++){o=o+"0"}return o.concat("",t)},docTypeChange:function(e,t){switch(t){case"STCD1":e.setProperty("/nipVisible",true);e.setProperty("/snVisible",false);e.setProperty("/prodVisible",false);e.setProperty("/srchMaxLength",0);break;case"ZXXSER50":e.setProperty("/nipVisible",false);e.setProperty("/snVisible",true);e.setProperty("/prodVisible",true);e.setProperty("/srchMaxLength",0);break;case"VBELN_VA":e.setProperty("/nipVisible",false);e.setProperty("/snVisible",false);e.setProperty("/prodVisible",false);e.setProperty("/srchMaxLength",20);break;default:e.setProperty("/nipVisible",false);e.setProperty("/snVisible",false);e.setProperty("/prodVisible",false);e.setProperty("/srchMaxLength",0)}},_fillDeepDispoPrint:function(e,t,r){var o=t;if(o.hasOwnProperty("OpenReturnDoc")){delete o.OpenReturnDoc}if(o.hasOwnProperty("ReturnStatus")){delete o.ReturnStatus}if(o.hasOwnProperty("DocToBapi")){delete o.DocToBapi}if(o.hasOwnProperty("DocToItem")){delete o.DocToItem}if(o.hasOwnProperty("RtrnToMsg")){delete o.RtrnToMsg}if(r){r.forEach(function(e){if(e.hasOwnProperty("ReturnDocStatus")){delete e.ReturnDocStatus}});o.PrintToItem=r}if(e&&!e===""){o.Guid=e}return o},_fillDeepDataForPmnts:function(e,t,r){var o=t?t:[{DictName:"ZLSCH",Key:"",Value:""}];var n=e?e:[{Invoice:"",ItmNumber:"",Serialno:""}];return{DictName:"ZLSCH",Key:t?"MAIN":"DISP",Value:t?r:"",MethodToItem:n,MethodToMethod:o}},setDataFromPaymentRequest:function(e,t,r,o){t.setProperty("/busy",false);if(e.hasOwnProperty("MethodToMethod")&&e.MethodToMethod!==null){if(e.Key==="DISP"){o.setData(e.MethodToMethod)}else if(e.Key==="MAIN"){r.setData(e.MethodToMethod)}if(e.Value.indexOf("||")>=0){var n=e.Value.split("||");t.setProperty("/disposition",n[0]==="X"?true:false);t.setProperty("/ownPayment",n[1]?parseFloat(n[1]):0);var a=function(e){if(e.Key==="E"){return e}},s=function(e){if(e.Key==="M"){return e}},i=function(e){if(e.Key==="WARNING"){return e}};var u=e.MethodToMethod.results.find(s),l=e.MethodToMethod.results.find(a),c=e.MethodToMethod.results.find(i);t.setProperty("/emergencyFund",parseFloat(l.Value));t.setProperty("/shopBalance",parseFloat(u.Value));t.setProperty("/noAccountDoc",c?true:false)}t.setProperty("/pmntLevel",e.Key)}},getDataFromRequest:function(e){var t;if(e.Value.indexOf("||")>0){var r=e.Value.split("||");t.disposition=r[0]==="X"?true:false;t.possibleReturn=r[1]}else{t.disposition=false;t.possibleReturn="0.00"}return t},setPmntMethDisplayText:function(e){var t=this.getModel("pmntMethods");return this.formatter._getPmntText(t,e)},setDispoMethDisplayText:function(e){var t=this.getModel("dsipPmntMethods");return this.formatter._getPmntText(t,e)},parseReturnDocVisibility:function(e,t){return!!e||t==="DOST"},_getPmntText:function(e,t){if(!t){return t}if(e){var r=e.getProperty("/results");if(r===undefined){return t}}else{return t}function o(e){if(e.Key===t){return e.Value}}var n=r.find(o);if(n.Value){return n.Value}else{return t}},setFieldRequiredBasedOnMeth:function(e,t,r){var o;if(t){o=e==="P"||r==="P"||e==="5"||r==="5"?true:false}else{o=e==="P"||e==="5"?true:false}return o},parseReturnDocStatus:function(e,t){if(e==="C"){return this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("Returned")}else if(e==="N"){return this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("Note")}else{if(t==="DOST"){return this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("NSInactive")}else if(e){return this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("OpenReturn")}}},parseReturnDocStatusState:function(e,t){if(e==="C"){return"Success"}else if(e==="N"){return"Warning"}else{if(t==="DOST"){return"Warning"}else if(e){return"Error"}}}}});
-//# sourceMappingURL=formatter.js.map
+sap.ui.define([
+	"sap/ui/model/json/JSONModel"
+], function(JSONModel) {
+	"use strict";
+
+	return {
+
+		numberUnit: function(sValue) {
+			if (!sValue) {
+				return "";
+			}
+			return parseFloat(sValue).toFixed(2);
+		},
+
+		objectHeaderNumberUnit: function(sName, sValue) {
+			if (sName && sValue) {
+				var change = [];
+				change.push(sValue);
+				change.push("PLN");
+
+				var oCurrType = new sap.ui.model.type.Currency({
+					showMeasure: false
+				});
+				return sName + ": " + oCurrType.formatValue(change, "string");
+			}
+		},
+
+		parseQuantity: function(sValue) {
+			return parseInt(sValue, 10);
+		},
+
+		_formatTargetQuantity: function(sValue) {
+			var oFormatOptions = {
+				precision: 13,
+				shortDecimals: 3,
+				decimalSeparator: "."
+			};
+			var oDecimalOptions = {
+				precision: 13,
+				scale: 3
+			};
+
+			var oDecimalType = new sap.ui.model.odata.type.Decimal(oFormatOptions, oDecimalOptions);
+
+			return oDecimalType.formatValue(sValue,
+				"string");
+		},
+
+		fillObject: function(oData, oCustomerData) {
+
+			if (oData && oCustomerData) {
+				oData.Invoice = oCustomerData.Invoice;
+				oData.Name = oCustomerData.Name;
+				oData.Name2 = oCustomerData.Name2;
+				oData.Name3 = oCustomerData.Name3;
+				oData.Name4 = oCustomerData.Name4;
+				oData.Street = oCustomerData.Street;
+				oData.HouseNo = oCustomerData.HouseNo;
+				oData.City = oCustomerData.City;
+				oData.Country = oCustomerData.Country;
+				oData.EMail = oCustomerData.EMail;
+				oData.ZzpersId = oCustomerData.ZzpersId;
+				oData.Taxnumber1 = oCustomerData.Taxnumber1;
+				oData.Tel1Numbr = oCustomerData.Tel1Numbr;
+				oData.PostlCod1 = oCustomerData.PostlCod1;
+				oData.Iban = oCustomerData.Iban;
+				oData.Remarks = oCustomerData.Remarks;
+				oData.PoczetFvRemark = oCustomerData.PoczetFvRemark;
+			}
+
+			return oData;
+
+		},
+
+		_setInitialCustomerData: function(oData) {
+			return new JSONModel({
+				Invoice: oData.Invoice,
+				Name: oData.Name,
+				Name2: oData.Name2,
+				Name3: oData.Name3,
+				Name4: oData.Name4,
+				Street: oData.Street,
+				HouseNo: oData.HouseNo,
+				City: oData.City,
+				Country: oData.Country || "PL",
+				EMail: oData.EMail,
+				ZzpersId: oData.ZzpersId,
+				Taxnumber1: oData.Taxnumber1,
+				Tel1Numbr: oData.Tel1Numbr,
+				PostlCod1: oData.PostlCod1,
+				Iban: oData.Iban,
+				Remarks: oData.Remarks,
+				PoczetFvRemark: oData.PoczetFvRemark
+			});
+		},
+
+		_setInitialAccData: function(sName) {
+			return new JSONModel({
+				AccountId: "",
+				Name: sName
+			});
+		},
+
+		_getFromFields: function(oSimpleForm) {
+			var aControls = [];
+			var aFormContent = oSimpleForm.getContent();
+			var sControlType;
+			for (var i = 0; i < aFormContent.length; i++) {
+				sControlType = aFormContent[i].getMetadata().getName();
+				if (sControlType === "sap.m.Input" || sControlType === "sap.m.FlexBox" ||
+					sControlType === "sap.m.MaskInput") {
+					if (sControlType === "sap.m.FlexBox") {
+						aControls = this._addFromFlexBox(aControls, aFormContent[i]);
+					} else {
+						aControls.push({
+							control: aFormContent[i],
+							required: aFormContent[i - 1].getRequired && aFormContent[i - 1].getRequired()
+						});
+					}
+				}
+			}
+			return aControls;
+		},
+
+		_addFromFlexBox: function(aControls, oFormContent) {
+			var aItems = oFormContent.getItems();
+
+			for (var i = 0; i < aItems.length; i++) {
+				aControls.push({
+					control: aItems[i],
+					required: true
+				});
+			}
+
+			return aControls;
+		},
+
+		_validateEmail: function(oEvent) {
+			var sValue = oEvent.getParameter("value"),
+				oRegExp = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+
+			if (!sValue) {
+				oEvent.getSource().setValueState("None");
+			} else if (!sValue.match(oRegExp)) {
+				oEvent.getSource().setValueState("Error");
+			} else {
+				oEvent.getSource().setValueState("None");
+			}
+		},
+
+		_setType: function(sType) {
+			switch (sType) {
+				case "E":
+					return sap.ui.core.MessageType.Error;
+				case "W":
+					return sap.ui.core.MessageType.Warning;
+				case "S":
+					return sap.ui.core.MessageType.Success;
+				case "I":
+					return sap.ui.core.MessageType.Information;
+			}
+		},
+
+		_fillDeepData: function(oHeader, aItems) {
+
+			var oDeepData = oHeader;
+
+			if (oDeepData.NoSapInvoice || oDeepData.InvoiceIsExt) {
+				oDeepData.Invoice = "00000000";
+			}
+
+			//			for(var i = 0; i < aItems.length; i++){
+			//				aItems[i].ItmNumber = this._generateItmNumber(i);
+			//			}
+
+			oDeepData.DocToItem = aItems;
+			oDeepData.DocToBapi = [{
+				"Id": "",
+				"Number": "",
+				"Row": 0,
+				"Field": ""
+			}];
+			oDeepData.RtrnToMsg = [{
+				"ReturnDoc": ""
+			}];
+			return oDeepData;
+		},
+
+		_fillNoRefDeepData: function(oData, sPlant) {
+			if (!oData.Invoice) {
+				oData.Invoice = "00000000";
+			}
+
+			var oDeepData = {
+				Invoice: oData.Invoice,
+				SalesDoc: oData.SalesOrder,
+				CustNum: oData.CustomerNumber,
+				NoSapInvoice: true,
+				InvoiceIsExt: true,
+				IsAgentProc: oData.IsAgentProc,
+				Zlsch: oData.Zlsch
+			};
+
+			if (oData.Bstdk) {
+				//				var TZOffsetMs = new Date(0).getTimezoneOffset()*60*1000;
+				var iOffsetMs = 3600000 * 2;
+				oData.Bstdk = new Date(oData.Bstdk.getTime() + iOffsetMs);
+			}
+
+			for (var i = 0; i < oData.DocToItem.length; i++) {
+				oData.DocToItem[i].ItmNumber = this._generateItmNumber(i);
+				oData.DocToItem[i].Name = oData.SupplierName;
+				oData.DocToItem[i].Name2 = oData.Name2;
+				oData.DocToItem[i].Name3 = oData.Name3;
+				oData.DocToItem[i].Name4 = oData.Name4;
+				oData.DocToItem[i].Bstdk = oData.Bstdk;
+				oData.DocToItem[i].City = oData.City;
+				oData.DocToItem[i].Country = oData.Country;
+				oData.DocToItem[i].HouseNo = oData.HouseNumber;
+				oData.DocToItem[i].PostlCod1 = oData.ZIPCode;
+				oData.DocToItem[i].Street = oData.Street;
+				oData.DocToItem[i].SalesDoc = oData.SalesOrder;
+				oData.DocToItem[i].Invoice = oData.Invoice;
+				oData.DocToItem[i].PoQuan = parseFloat(oData.DocToItem[i].PoQuan).toFixed(3);
+				oData.DocToItem[i].Werks = sPlant;
+				oData.DocToItem[i].Iban = oData.Iban;
+				oData.DocToItem[i].Remarks = oData.Remarks;
+				oData.DocToItem[i].RetReason = oData.RetReason; // 20.06.2018 added return reason on position
+				if (oData.DocToItem[i].BruttoValue instanceof Array) {
+					oData.DocToItem[i].BruttoValue = oData.DocToItem[i].BruttoValue[0].toFixed(2);
+				} else {
+					oData.DocToItem[i].BruttoValue = oData.DocToItem[i].BruttoValue;
+				}
+				if (oData.DocToItem[i].BruttoValue > 0 && (oData.Zlsch === "P" || oData.Zlsch === "R")) {
+					oDeepData.IsDisposition = true;
+				}
+			}
+
+			oDeepData.DocToItem = oData.DocToItem;
+			oDeepData.DocToBapi = oData.DocToBapi;
+			oDeepData.RtrnToMsg = oData.RtrnToMsg;
+
+			return oDeepData;
+		},
+
+		calculateReturn: function(sRet1, sRet2, sCurrency) {
+			var sResult = parseFloat(sRet1) + parseFloat(sRet2);
+			return sResult.toFixed(2) + " " + sCurrency;
+		},
+
+		_calculateAddPrice: function(aItems) {
+			var iRetAddAmount = 0;
+
+			for (var i = 0; i < aItems.length; i++) {
+				if (aItems[i].getBindingContext("addData").getObject().BruttoValue) {
+					iRetAddAmount = (parseFloat(iRetAddAmount) + parseFloat(aItems[i].getBindingContext("addData").getObject().BruttoValue)).toFixed(2);
+				}
+			}
+
+			return parseFloat(iRetAddAmount).toFixed(2);
+		},
+
+		_generateItmNumber: function(iPos) {
+			var sPos = (iPos + 1).toString() + "0",
+				sPosLength = 6 - sPos.length,
+				sAlphaIn = "";
+
+			for (var i = 0; i < sPosLength; i++) {
+				sAlphaIn = sAlphaIn + "0";
+			}
+
+			return sAlphaIn.concat("", sPos);
+		},
+
+		docTypeChange: function(oViewModel, sSelectedKey) {
+			switch (sSelectedKey) {
+				case "STCD1":
+					oViewModel.setProperty("/nipVisible", true);
+					oViewModel.setProperty("/snVisible", false);
+					oViewModel.setProperty("/prodVisible", false);
+					oViewModel.setProperty("/srchMaxLength", 0);
+					break;
+				case "ZXXSER50":
+					oViewModel.setProperty("/nipVisible", false);
+					oViewModel.setProperty("/snVisible", true);
+					oViewModel.setProperty("/prodVisible", true);
+					oViewModel.setProperty("/srchMaxLength", 0);
+					break;
+				case "VBELN_VA":
+					oViewModel.setProperty("/nipVisible", false);
+					oViewModel.setProperty("/snVisible", false);
+					oViewModel.setProperty("/prodVisible", false);
+					oViewModel.setProperty("/srchMaxLength", 20);
+					break;
+				default:
+					oViewModel.setProperty("/nipVisible", false);
+					oViewModel.setProperty("/snVisible", false);
+					oViewModel.setProperty("/prodVisible", false);
+					oViewModel.setProperty("/srchMaxLength", 0);
+			}
+		},
+
+		_fillDeepDispoPrint: function(GUID, oHeader, aSelectedItems) {
+			//			"guid'00000000-0000-0000-0000-0000-00000000'"
+			//			var sGuid = ( GUID === "" || !GUID ) ? "" : GUID; 
+			//			var oDeepPayload = {
+			//				//				Guid: sGuid,
+			//				SalesDoc: "",
+			//				PrintToItem: aSelectedItems
+			//			};
+
+			//			if(oHeader.hasOwnProperty("DispMethod")){
+			//				delete oHeader.DispMethod;
+			//			}
+
+			var oDeepPayload = oHeader;
+			if (oDeepPayload.hasOwnProperty("OpenReturnDoc")) {
+				delete oDeepPayload.OpenReturnDoc;
+			}
+
+			if (oDeepPayload.hasOwnProperty("ReturnStatus")) {
+				delete oDeepPayload.ReturnStatus;
+			}
+			//KSEF{
+			if (oDeepPayload.hasOwnProperty("DocToBapi")) {
+				delete oDeepPayload.DocToBapi;
+			}
+
+			if (oDeepPayload.hasOwnProperty("DocToItem")) {
+				delete oDeepPayload.DocToItem;
+			}
+
+			if (oDeepPayload.hasOwnProperty("RtrnToMsg")) {
+				delete oDeepPayload.RtrnToMsg;
+			}
+
+			//}
+
+			if (aSelectedItems) {
+				aSelectedItems.forEach(function(oItem) {
+					if (oItem.hasOwnProperty("ReturnDocStatus")) {
+						delete oItem.ReturnDocStatus;
+					}
+				});
+				oDeepPayload.PrintToItem = aSelectedItems;
+			}
+
+			if (GUID && !GUID === "") {
+				oDeepPayload.Guid = GUID;
+			}
+
+			return oDeepPayload;
+		},
+
+		_fillDeepDataForPmnts: function(aSelectedItems, aPmntMethods, sPmntMeth) {
+			var aMethods = aPmntMethods ? aPmntMethods : [{
+				DictName: "ZLSCH",
+				Key: "",
+				Value: ""
+			}];
+
+			var aItems = aSelectedItems ? aSelectedItems : [{
+				Invoice: "",
+				ItmNumber: "",
+				Serialno: ""
+			}];
+
+			return {
+				DictName: "ZLSCH",
+				Key: aPmntMethods ? "MAIN" : "DISP",
+				Value: aPmntMethods ? sPmntMeth : "",
+				MethodToItem: aItems,
+				MethodToMethod: aMethods
+			};
+		},
+
+		setDataFromPaymentRequest: function(oData, oViewModel, oPmntModel, oDispModel, oBonModel) {
+			oViewModel.setProperty("/busy", false);
+			if (oData.hasOwnProperty("MethodToMethod") && oData.MethodToMethod !== null) {
+				if (oData.Key === "DISP") {
+					oDispModel.setData(oData.MethodToMethod);
+				} else if (oData.Key === "MAIN") {
+					oPmntModel.setData(oData.MethodToMethod);
+				//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{
+				} else if (oData.Key === "BON") {
+					oBonModel.setData(oData.MethodToMethod);					
+				} //}
+
+				if (oData.Value.indexOf("||") >= 0) {
+					var aData = oData.Value.split("||");
+					oViewModel.setProperty("/disposition", aData[0] === 'X' ? true : false);
+					//					oViewModel.setProperty("/possibleReturn", aData[1]);
+					oViewModel.setProperty("/ownPayment", aData[1] ? parseFloat(aData[1]) : 0);
+
+					var findEmergFunds = function(element) {
+							if (element.Key === "E") {
+								return element;
+							}
+						},
+						findBalance = function(element) {
+							if (element.Key === "M") {
+								return element;
+							}
+						},
+						checkWarning = function(element) {
+							if (element.Key === "WARNING") {
+								return element;
+							}
+						};
+						//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{
+						findBon = function(element) {
+							if (element.Key === "B") {
+								return element;
+							}
+						}; //}				
+
+					var oBalance = oData.MethodToMethod.results.find(findBalance),
+						oEmergBalance = oData.MethodToMethod.results.find(findEmergFunds),
+						oWarning = oData.MethodToMethod.results.find(checkWarning);
+
+					oViewModel.setProperty("/emergencyFund", parseFloat(oEmergBalance.Value));
+					oViewModel.setProperty("/shopBalance", parseFloat(oBalance.Value));
+					oViewModel.setProperty("/noAccountDoc", oWarning ? true : false);
+				}
+
+				oViewModel.setProperty("/pmntLevel", oData.Key);
+			}
+		},
+
+		getDataFromRequest: function(oData) {
+			var oFormattedData;
+
+			if (oData.Value.indexOf("||") > 0) {
+				var aData = oData.Value.split("||");
+				oFormattedData.disposition = aData[0] === 'X' ? true : false;
+				oFormattedData.possibleReturn = aData[1];
+			} else {
+				oFormattedData.disposition = false;
+				oFormattedData.possibleReturn = "0.00";
+			}
+
+			return oFormattedData;
+		},
+
+		setPmntMethDisplayText: function(sPmntKey) {
+			var oMethModel = this.getModel("pmntMethods");
+
+			return this.formatter._getPmntText(oMethModel, sPmntKey);
+		},
+
+		setDispoMethDisplayText: function(sPmntKey) {
+			var oDispModel = this.getModel("dsipPmntMethods");
+
+			return this.formatter._getPmntText(oDispModel, sPmntKey);
+		},
+		parseReturnDocVisibility: function(sReturnDoc, sNsStatus) {
+			return !!sReturnDoc || sNsStatus === 'DOST';
+		},
+
+		_getPmntText: function(oMethModel, sPmntKey) {
+			if (!sPmntKey) {
+				return sPmntKey;
+			}
+
+			if (oMethModel) {
+				var aMeths = oMethModel.getProperty("/results");
+				if (aMeths === undefined) {
+					return sPmntKey;
+				}
+			} else {
+				return sPmntKey;
+			}
+
+			function getText(element) {
+				if (element.Key === sPmntKey) {
+					return element.Value;
+				}
+			}
+
+			var oMethod = aMeths.find(getText);
+
+			if (oMethod.Value) {
+				return oMethod.Value;
+			} else {
+				return sPmntKey;
+			}
+
+		},
+
+		setFieldRequiredBasedOnMeth: function(sPmntMeth, bDisposition, sDispoMeth) {
+			var bRequired;
+			//BOC 19.02.2019 PSy Added '5' to IBAN field
+			if (bDisposition) {
+				bRequired = (sPmntMeth === "P" || sDispoMeth === "P" || sPmntMeth === "5" || sDispoMeth === "5") ? true : false;
+			} else {
+				bRequired = (sPmntMeth === "P" || sPmntMeth === "5") ? true : false;
+			}
+
+			return bRequired;
+		},
+		parseReturnDocStatus: function(sStatus, sNsStatus) {
+			if (sStatus === 'C') {
+				return this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("Returned");
+			} else if (sStatus === 'N') {
+				return this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("Note");
+			} else {
+				if (sNsStatus === 'DOST') {
+					return this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("NSInactive");
+				} else if (sStatus) {
+					return this.getOwnerComponent().getModel("i18n").getResourceBundle().getText("OpenReturn");
+				}
+			}
+		},
+		parseReturnDocStatusState: function(sStatus, sNsStatus) {
+			if (sStatus === 'C') {
+				return "Success";
+			} else if (sStatus === 'N') {
+				return "Warning";
+			} else {
+					if (sNsStatus === 'DOST') {
+					return "Warning";
+				} else if (sStatus) {
+					return "Error";
+				}
+			}
+		}
+
+	};
+
+});
