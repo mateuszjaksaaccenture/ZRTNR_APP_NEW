@@ -281,7 +281,9 @@ sap.ui.define([
 					} else {
 						oViewModel.setProperty("/pmntDialogTitle", this.getResourceBundle().getText("SelectPmntMeth"));
 					}
-					this._openPmntDialog();
+					//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{
+					//this._openPmntDialog();
+					this._openBonDialog(); //}
 				}
 			}.bind(this);
 			var fnError = function(oError) {
@@ -306,9 +308,7 @@ sap.ui.define([
 			var sPmntMeth = oEvent.getParameter("selectedItem").getDescription(),
 				oViewModel = this._oViewModel;
 			oViewModel.setProperty("/dispMethod", sPmntMeth);
-			//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{
-			//this._getPmntMethods(this._mainPmntProc);
-			this._getBonMethods(this._mainPmntProc); //}
+			this._getPmntMethods(this._mainPmntProc);
 		},
 		//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{
 		_handleBonMethConfirm: function(oEvent) {
