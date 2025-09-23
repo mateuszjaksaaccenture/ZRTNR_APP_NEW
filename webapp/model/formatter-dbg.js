@@ -422,7 +422,12 @@ sap.ui.define([
 					oViewModel.setProperty("/emergencyFund", parseFloat(oEmergBalance.Value));
 					oViewModel.setProperty("/shopBalance", parseFloat(oBalance.Value));
 					oViewModel.setProperty("/noAccountDoc", oWarning ? true : false); 
-					oViewModel.setProperty("/bonMethod", oBon.Value); 
+					if(oBon) {
+						oViewModel.setProperty("/bonMethod", oBon.Value);
+					}
+					else {
+						oViewModel.setProperty("/bonMethod", '');
+					}
 				}
 
 				oViewModel.setProperty("/pmntLevel", oData.Key);
