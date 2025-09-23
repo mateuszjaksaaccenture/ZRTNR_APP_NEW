@@ -259,10 +259,9 @@ sap.ui.define([
 			var oViewModel = this._oViewModel,
 				oPmntModel = this.getModel("pmntMethods"),
 				oDispModel = this.getModel("dsipPmntMethods"),
-				oBonModel = this.getModel("bonPmntMethods"), //P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{}
 				aMeths;
 			var fnSuccess = function(oData) {
-				formatter.setDataFromPaymentRequest(oData, oViewModel, oPmntModel, oDispModel, oBonModel);
+				formatter.setDataFromPaymentRequest(oData, oViewModel, oPmntModel, oDispModel);
 				if (oViewModel.getProperty("/ownPayment") > 0 && oData.Key === this._dispPmntProc) {
 					oViewModel.setProperty("/pmntDialogTitle", this.getResourceBundle().getText("SelectPmntMethDisp"));
 					this._openDispPmntDialog();
