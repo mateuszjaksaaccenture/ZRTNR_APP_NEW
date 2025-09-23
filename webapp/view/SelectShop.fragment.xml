@@ -1,0 +1,14 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+	<Dialog title="{i18n>SelectShop}">
+		<List id="SHOPS_LIST" items="{CheckOut>/ShopSet}" mode="SingleSelectLeft" includeItemInSelection="true">
+			<StandardListItem title="{CheckOut>ShopId}" description="{CheckOut>Description}" type="Active"
+				selected="{CheckOut>Selected}"/>
+		</List>
+		<beginButton>
+			<Button icon="sap-icon://accept" text="{i18n>dialogSubmitButtonText}" press="_handleSaveShop"/>
+		</beginButton>
+		<endButton>
+			<Button text="{i18n>dialogCloseButtonText}" press="onCloseSelectShop"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

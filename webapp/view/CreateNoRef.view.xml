@@ -1,0 +1,120 @@
+<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.m.semantic" xmlns:footerbar="sap.ushell.ui.footerbar"
+	xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout" controllerName="cre.ret.app.controller.CreateNoRef">
+	<semantic:FullscreenPage id="pageNoRef" navButtonPress="onNavBack" showNavButton="true" title="{i18n>createNoRefTitle}"
+		busy="{noRefView>/busy}">
+		<semantic:content>
+			<VBox class="sapUiSmallMargin">
+				<f:SimpleForm id="CUST_DATA_FORM" minWidth="1024" maxContainerCols="2" editable="true" layout="ResponsiveGridLayout"
+					title="{i18n>orderDetails}" labelSpanL="3" labelSpanM="3" emptySpanL="4" emptySpanM="4" columnsL="1" columnsM="1" class="editableForm">
+					<f:content>
+						<Label text="{i18n>CUST_NUM_EXST}"/>
+						<Input value="{noRefData>/CustomerNumber}"/>
+						<Label text="{i18n>Name}" required="true"/>
+						<Input id="noRefName" value="{noRefData>/SupplierName}" maxLength="35" liveChange="_validateCreateEnablement" valueState="{= ${noRefData>/SupplierName} ? 'None' : 'Warning' }" valueLiveUpdate="true" valueStateText="{i18n>nameValueStateText}"/>
+						<Label visible="false"/>
+						<Input id="noRefName2" value="{noRefData>/Name2}" maxLength="35"/>
+						<Label visible="false"/>
+						<Input id="noRefName3" value="{noRefData>/Name3}" maxLength="35"/>
+						<Label visible="false"/>
+						<Input id="noRefName4" value="{noRefData>/Name4}" maxLength="35"/>
+						<Label text="{i18n>Street}"/>
+						<Input id="noRefStreet" value="{noRefData>/Street}"/>
+						<Input id="noRefHouse" value="{noRefData>/HouseNumber}">
+							<layoutData>
+								<l:GridData span="L2 M2 S4"/>
+							</layoutData>
+						</Input>
+						<Label text="{i18n>PostCodeReverse}" required="true"/>
+						<Input id="noRefCity" value="{noRefData>/City}" valueState="{= ${noRefData>/City} ? 'None' : 'Warning' }" liveChange="_validateCreateEnablement" valueLiveUpdate="true" valueStateText="{i18n>cityValueStateText}" />
+						<MaskInput id="zipCode" value="{noRefData>/ZIPCode}" placeholderSymbol="_" mask="99-999" change="zipCodeChange" valueState="Warning"
+							valueStateText="{i18n>zipValueStateText}">
+							<layoutData>
+								<l:GridData span="L2 M2 S4"/>
+							</layoutData>
+						</MaskInput>
+						<Label text="{i18n>Country}" required="true"/>
+						<Input value="{noRefData>/Country}" valueState="{= ${noRefData>/Country} ? 'None' : 'Warning' }" maxLength="3" valueLiveUpdate="true" liveChange="_validateCreateEnablement" valueHelpOnly="true"
+							valueHelpRequest="_countryHelpRequest" showValueHelp="true" valueStateText="{i18n>countryValueStateText}"/>
+						<Label text="{i18n>invoiceNr}"/>
+						<Input id="ifsInvoice" value="{noRefData>/Invoice}" valueState="{noRefView>/docState}" valueStateText="{i18n>docValueStateText}"
+							valueLiveUpdate="true" liveChange="_validateCreateEnablement" maxLength="20"/>
+						<Label text="{i18n>salesOrderNr}"/>
+						<Input id="ifsSaleOrder" value="{noRefData>/SalesOrder}" valueState="{noRefView>/docState}" valueStateText="{i18n>docValueStateText}"
+							valueLiveUpdate="true" liveChange="_validateCreateEnablement" maxLength="20"/>
+						<Label text="{i18n>InvoiceDate}" required="true"/>
+						<DatePicker name="Bstdk" value="{ path: 'noRefData>/Bstdk', type: 'sap.ui.model.type.Date'}" id="PODatePicker" type="Date" valueStateText="{i18n>bstdkValueStateText}"
+							enabled="true" visible="true" placeholder="{i18n>datePlaceholder}" change="_validateCreateEnablement" valueState="{= ${noRefData>/Bstdk} ? 'None' : 'Warning' }"/>
+						<Label text="{i18n>AccountID}" visible="{= ${noRefData>/Zlsch} === 'P' ? true : false }"/>
+						<Input id="accountId" value="{noRefData>/Iban}" visible="{= ${noRefData>/Zlsch} === 'P' ? true : false }" maxLength="26" valueLiveUpdate="true" liveChange="_validateMainIban" valueStateText="{i18n>InvalidAccountID}"/>
+						<Label text="{i18n>REASON}" required="true"/>
+						<ComboBox selectedKey="{noRefData>/RetReason}"
+							valueState="{= ${noRefData>/RetReason} ? 'None' : 'Warning' }"
+							items="{ path: '/SalesItemDictionarySet', sorter: { path: 'Value' }, filters : [ { path : 'DictName', operator : 'EQ', value1 : 'RET_REASON'} ] }">
+							<core:ListItem key="{Key}" text="{Value}" additionalText="{Key}"/>
+						</ComboBox>
+						<Label text="{i18n>Remarks}"/>
+						<TextArea value="{noRefData>/Remarks}" wrapping="Soft" maxLength="200"/>
+					</f:content>
+				</f:SimpleForm>
+				<Table id="RTRN_ITEMS_TBL" inset="true" busyIndicatorDelay="{noRefView>/delay}" items="{noRefData>/DocToItem/}" mode="Delete"
+					delete="onPosDelete">
+					<headerToolbar>
+						<OverflowToolbar id="otbSubheader">
+							<Title text="{i18n>returnTableHeader}" level="H2"/>
+							<ToolbarSpacer/>
+							<OverflowToolbarButton type="Transparent" text="{i18n>addPos}" icon="sap-icon://add" press="onPosAdd"/>
+						</OverflowToolbar>
+					</headerToolbar>
+					<columns>
+						<Column width="18em">
+							<Text text="{i18n>MAT_NR}"/>
+						</Column>
+						<Column hAlign="Center" width="12em" minScreenWidth="Tablet" demandPopin="true">
+							<Text text="{i18n>PRICE_BRUT}"/>
+						</Column>
+						<!--<Column hAlign="Center" minScreenWidth="Tablet" demandPopin="true" visible="false">-->
+						<!--	<Text text="{i18n>VAT}"/>-->
+						<!--</Column>-->
+						<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center" visible="false">
+							<Text text="{i18n>SER_NUM}"/>
+						</Column>
+						<Column minScreenWidth="Tablet" width="8em" demandPopin="true" hAlign="Center">
+							<Text text="{i18n>QUAN}"/>
+						</Column>
+						<!--<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center" visible="true">-->
+						<!--	<Text text="{i18n>INC_FLAG}"/>-->
+						<!--</Column>-->
+<!-- 						<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+							<Text text="{i18n>RET_REAS}"/>
+						</Column> -->
+						<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center" visible="true">
+							<Text text="{i18n>PMNT_METH}"/>
+						</Column>
+						<!--<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center" visible="false">-->
+						<!--	<Text text="{i18n>FU_CODE}"/>-->
+						<!--</Column>-->
+						<!--<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center" visible="false">-->
+						<!--	<Text text="{i18n>NFU_CODE}"/>-->
+						<!--</Column>-->
+						<!--<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center" visible="false">-->
+						<!--	<Text text="{i18n>INSP_CODE}"/>-->
+						<!--</Column>-->
+					</columns>
+					<core:Fragment fragmentName="cre.ret.app.view.NoRefListItem" type="XML"/>
+				</Table>
+			</VBox>
+		</semantic:content>
+		<semantic:positiveAction>
+			<semantic:PositiveAction visible="{= ${noRefData>/Zlsch} ? true : false }" text="{i18n>RTRN_BTN}" id="creNoRefBtn" press="onNoRefCreate" enabled="{noRefView>/enableCreate}"/>
+		</semantic:positiveAction>
+		<semantic:customFooterContent>
+			<Button id="noRefAgent" visible="{= ${noRefData>/Zlsch} ? true : false }" text="{i18n>RTRN_AGENT_BTN}" press="onNoRefAgentCreate" type="Accept" enabled="{noRefView>/enableCreate}"/>
+		</semantic:customFooterContent>
+		<semantic:mainAction>
+			<semantic:MainAction text="{i18n>METH_BTN}" id="noRefMethBtn" press="onMethodPress" enabled="{noRefView>/enableCreate}"/>
+		</semantic:mainAction>
+		<semantic:messagesIndicator>
+			<semantic:MessagesIndicator tooltip="{i18n>MSG_IND_TOOLTIP}" id="msgInd" press="onMessageButtonPressed"/>
+		</semantic:messagesIndicator>
+	</semantic:FullscreenPage>
+</mvc:View>

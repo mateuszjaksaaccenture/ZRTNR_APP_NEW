@@ -1,0 +1,151 @@
+[{
+	"SalesDoc": "SalesDoc 1",
+	"MatAndQuan": "MatAndQuan 1",
+	"SrchField": "SrchField 1",
+	"Delivery": "Delivery 1",
+	"SerialNums": "SerialNums 1",
+	"Invoice": "Invoice 1",
+	"GrossVal": 7584.99,
+	"Currency": "Currency 1",
+	"CustNum": "CustNum 1",
+	"CustDescr": "CustDescr 1",
+	"__metadata": {
+		"uri": "Documents('Invoice 1')",
+		"type": "ZRETURN_CREA_SRV.Document"
+	}
+}, {
+	"SalesDoc": "SalesDoc 2",
+	"MatAndQuan": "MatAndQuan 2",
+	"SrchField": "SrchField 2",
+	"Delivery": "Delivery 2",
+	"SerialNums": "SerialNums 2",
+	"Invoice": "Invoice 2",
+	"GrossVal": 7242.26,
+	"Currency": "Currency 2",
+	"CustNum": "CustNum 2",
+	"CustDescr": "CustDescr 2",
+	"__metadata": {
+		"uri": "Documents('Invoice 2')",
+		"type": "ZRETURN_CREA_SRV.Document"
+	}
+}, {
+	"SalesDoc": "SalesDoc 3",
+	"MatAndQuan": "MatAndQuan 3",
+	"SrchField": "SrchField 3",
+	"Delivery": "Delivery 3",
+	"SerialNums": "SerialNums 3",
+	"Invoice": "Invoice 3",
+	"GrossVal": 4213.43,
+	"Currency": "Currency 3",
+	"CustNum": "CustNum 3",
+	"CustDescr": "CustDescr 3",
+	"__metadata": {
+		"uri": "Documents('Invoice 3')",
+		"type": "ZRETURN_CREA_SRV.Document"
+	}
+}, {
+	"SalesDoc": "SalesDoc 4",
+	"MatAndQuan": "MatAndQuan 4",
+	"SrchField": "SrchField 4",
+	"Delivery": "Delivery 4",
+	"SerialNums": "SerialNums 4",
+	"Invoice": "Invoice 4",
+	"GrossVal": 9223.99,
+	"Currency": "Currency 4",
+	"CustNum": "CustNum 4",
+	"CustDescr": "CustDescr 4",
+	"__metadata": {
+		"uri": "Documents('Invoice 4')",
+		"type": "ZRETURN_CREA_SRV.Document"
+	}
+}, {
+	"SalesDoc": "SalesDoc 5",
+	"MatAndQuan": "MatAndQuan 5",
+	"SrchField": "SrchField 5",
+	"Delivery": "Delivery 5",
+	"SerialNums": "SerialNums 5",
+	"Invoice": "Invoice 5",
+	"GrossVal": 858.35,
+	"Currency": "Currency 5",
+	"CustNum": "CustNum 5",
+	"CustDescr": "CustDescr 5",
+	"__metadata": {
+		"uri": "Documents('Invoice 5')",
+		"type": "ZRETURN_CREA_SRV.Document"
+	}
+}, {
+	"SalesDoc": "SalesDoc 6",
+	"MatAndQuan": "MatAndQuan 6",
+	"SrchField": "SrchField 6",
+	"Delivery": "Delivery 6",
+	"SerialNums": "SerialNums 6",
+	"Invoice": "Invoice 6",
+	"GrossVal": 5494.54,
+	"Currency": "Currency 6",
+	"CustNum": "CustNum 6",
+	"CustDescr": "CustDescr 6",
+	"__metadata": {
+		"uri": "Documents('Invoice 6')",
+		"type": "ZRETURN_CREA_SRV.Document"
+	}
+}, {
+	"SalesDoc": "SalesDoc 7",
+	"MatAndQuan": "MatAndQuan 7",
+	"SrchField": "SrchField 7",
+	"Delivery": "Delivery 7",
+	"SerialNums": "SerialNums 7",
+	"Invoice": "Invoice 7",
+	"GrossVal": 665.99,
+	"Currency": "Currency 7",
+	"CustNum": "CustNum 7",
+	"CustDescr": "CustDescr 7",
+	"__metadata": {
+		"uri": "Documents('Invoice 7')",
+		"type": "ZRETURN_CREA_SRV.Document"
+	}
+}, {
+	"SalesDoc": "SalesDoc 8",
+	"MatAndQuan": "MatAndQuan 8",
+	"SrchField": "SrchField 8",
+	"Delivery": "Delivery 8",
+	"SerialNums": "SerialNums 8",
+	"Invoice": "Invoice 8",
+	"GrossVal": 6652.74,
+	"Currency": "Currency 8",
+	"CustNum": "CustNum 8",
+	"CustDescr": "CustDescr 8",
+	"__metadata": {
+		"uri": "Documents('Invoice 8')",
+		"type": "ZRETURN_CREA_SRV.Document"
+	}
+}, {
+	"SalesDoc": "SalesDoc 9",
+	"MatAndQuan": "MatAndQuan 9",
+	"SrchField": "SrchField 9",
+	"Delivery": "Delivery 9",
+	"SerialNums": "SerialNums 9",
+	"Invoice": "Invoice 9",
+	"GrossVal": 6965.2,
+	"Currency": "Currency 9",
+	"CustNum": "CustNum 9",
+	"CustDescr": "CustDescr 9",
+	"__metadata": {
+		"uri": "Documents('Invoice 9')",
+		"type": "ZRETURN_CREA_SRV.Document"
+	}
+}, {
+	"SalesDoc": "SalesDoc 10",
+	"MatAndQuan": "MatAndQuan 10",
+	"SrchField": "SrchField 10",
+	"Delivery": "Delivery 10",
+	"SerialNums": "SerialNums 10",
+	"Invoice": "Invoice 10",
+	"GrossVal": 116.9,
+	"Currency": "Currency 10",
+	"CustNum": "CustNum 10",
+	"CustDescr": "CustDescr 10",
+	"__metadata": {
+		"uri": "Documents('Invoice 10')",
+		"type": "ZRETURN_CREA_SRV.Document"
+	}
+}]

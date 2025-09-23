@@ -1,0 +1,219 @@
+{
+    "_version": "1.2.0",
+    "sap.app": {
+        "_version": "1.2.0",
+        "id": "cre.ret.app",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "applicationVersion": {
+            "version": "1.0.0"
+        },
+        "dataSources": {
+            "mainService": {
+                "uri": "/sap/opu/odata/sap/ZRETURN_CREA_SRV/",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "2.0",
+                    "localUri": "localService/metadata.xml"
+                }
+            },
+            "checkOutService": {
+                "uri": "/sap/opu/odata/sap/ZCHECK_OUT_SRV",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "2.0",
+                    "localUri": "localService/metadata.xml"
+                }
+            }
+        },
+        "sourceTemplate": {
+            "id": "sap.ui.ui5-template-plugin.1worklist",
+            "version": "1.36.2",
+            "toolsId": "1ceae313-ca9e-4d53-b065-77beb9b68095"
+        }
+    },
+    "sap.ui": {
+        "_version": "1.2.0",
+        "technology": "UI5",
+        "icons": {
+            "icon": "sap-icon://task",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        },
+        "supportedThemes": [
+            "sap_hcb",
+            "sap_bluecrystal"
+        ]
+    },
+    "sap.ui5": {
+        "_version": "1.2.0",
+        "rootView": {
+            "viewName": "cre.ret.app.view.App",
+            "type": "XML",
+            "id": "app"
+        },
+        "dependencies": {
+            "minUI5Version": "1.36.0",
+            "libs": {
+                "sap.ui.core": {
+                    "minVersion": "1.36.0"
+                },
+                "sap.m": {
+                    "minVersion": "1.36.0"
+                },
+                "sap.ushell": {
+                    "minVersion": "1.36.0"
+                },
+                "sap.collaboration": {
+                    "minVersion": "1.36",
+                    "lazy": true
+                }
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "cre.ret.app.i18n.i18n"
+                }
+            },
+            "addData": {
+                "type": "sap.ui.model.json.JSONModel",
+                "settings": {
+                    "defaultBindingMode": "TwoWay"
+                }
+            },
+            "noRefData": {
+                "type": "sap.ui.model.json.JSONModel",
+                "settings": {
+                    "defaultBindingMode": "TwoWay"
+                }
+            },
+            "pmntMethods": {
+                "type": "sap.ui.model.json.JSONModel"
+            },
+            "dsipPmntMethods": {
+                "type": "sap.ui.model.json.JSONModel"
+            },
+            "": {
+                "dataSource": "mainService",
+                "settings": {
+                    "metadataUrlParams": {
+                        "sap-documentation": "heading"
+                    },
+                    "defaultBindingMode": "TwoWay",
+                    "defaultCountMode": "InlineRepeat"
+                }
+            },
+            "CheckOut": {
+                "dataSource": "checkOutService",
+                "settings": {
+                    "metadataUrlParams": {
+                        "sap-documentation": "heading"
+                    }
+                }
+            },
+            "Parent": {
+                "type": "sap.ui.model.json.JSONModel"
+            }
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "viewPath": "cre.ret.app.view",
+                "controlId": "app",
+                "controlAggregation": "pages",
+                "bypassed": {
+                    "target": [
+                        "notFound"
+                    ]
+                },
+                "async": true
+            },
+            "routes": [
+                {
+                    "pattern": "",
+                    "name": "worklist",
+                    "target": [
+                        "worklist"
+                    ]
+                },
+                {
+                    "pattern": "Document/{objectId}",
+                    "name": "object",
+                    "target": [
+                        "object"
+                    ]
+                },
+                {
+                    "name": "return",
+                    "pattern": "Document/{objectId}/ReturnDocument/{returnDoc}",
+                    "greedy": false,
+                    "target": [
+                        "return"
+                    ]
+                },
+                {
+                    "name": "createNoRef",
+                    "pattern": "createWithoutReference",
+                    "greedy": false,
+                    "target": [
+                        "createNoRef"
+                    ]
+                }
+            ],
+            "targets": {
+                "worklist": {
+                    "viewName": "Worklist",
+                    "viewId": "worklist",
+                    "viewLevel": 1
+                },
+                "object": {
+                    "viewName": "Object",
+                    "viewId": "object",
+                    "viewLevel": 2
+                },
+                "createNoRef": {
+                    "viewName": "CreateNoRef",
+                    "viewId": "createnoref",
+                    "viewLevel": 2
+                },
+                "objectNotFound": {
+                    "viewName": "ObjectNotFound",
+                    "viewId": "objectNotFound"
+                },
+                "notFound": {
+                    "viewName": "NotFound",
+                    "viewId": "notFound"
+                },
+                "return": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearAggregation": true,
+                    "viewName": "ReturnDoc",
+                    "viewId": "return",
+                    "viewLevel": 3
+                }
+            }
+        }
+    },
+    "sap.platform.abap": {
+        "uri": "/sap/bc/ui5_ui5/sap/zrtrn_crea/webcontent",
+        "_version": "1.1.0"
+    }
+}

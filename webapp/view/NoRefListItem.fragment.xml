@@ -1,0 +1,33 @@
+<ColumnListItem xmlns="sap.m" xmlns:core="sap.ui.core">
+  <cells>
+    <Input value="{noRefData>Material}" valueLiveUpdate="true" showValueHelp="true" valueHelpOnly="true" valueHelpRequest="_productHelpRequest"/>
+    <Input value="{path: 'noRefData>BruttoValue', type: 'sap.ui.model.type.Currency'}" description="{i18n>PLN}"/>
+    <!--constraints:{ precision: 16, scale: 3 }-->
+    <!--<Input value="{noRefData>VatValue}"/>-->
+    <Input value="{noRefData>Serialno}" liveChange="_snChange" visible="false"/>
+    <!--, formatter: '.formatter.parseQuantity' , type: 'sap.ui.model.type.Decimal' , constraints:{ precision: 13, scale: 3 }}-->
+    <Input value="{ path: 'noRefData>PoQuan'}" type="Number" description="{i18n>PC}" enabled="{= ${noRefData>Serialno} ? false : true }"
+      liveChange="_quanLive"/>
+    <!--<CheckBox selected="{noRefData>IncompleteFlag}"/>-->
+    <!--<ComboBox selectionChange="_comboChange" selectedKey="{noRefData>RetReason}" enabled="false"-->
+      <!--items="{ path: '/SalesItemDictionarySet', sorter: { path: 'Value' }, filters : [ { path : 'DictName', operator : 'EQ', value1 : 'RET_REASON'} ] }">-->
+      <!--<core:ListItem key="{Key}" text="{Value}" additionalText="{Key}"/>-->
+    <!--</ComboBox>-->
+     <ComboBox selectionChange="_comboChange" selectedKey="{noRefData>Zlsch}" enabled="false"
+      items="{ path: '/SalesItemDictionarySet', sorter: { path: 'Value' }, filters : [ { path : 'DictName', operator : 'EQ', value1 : 'ZLSCH'} ] }">
+      <core:ListItem key="{Key}" text="{Value}" additionalText="{Key}"/>
+     </ComboBox>
+    <!--<ComboBox selectionChange="_comboChange" id="fuCode" selectedKey="{noRefData>FuCode}"-->
+    <!--  items="{ path: '/SalesItemDictionarySet', sorter: { path: 'Value' }, filters : [ { path : 'DictName', operator : 'EQ', value1 : 'FU_CODE'} ] }">-->
+    <!--  <core:ListItem key="{Key}" text="{Value}" additionalText="{Key}"/>-->
+    <!--</ComboBox>-->
+    <!--<ComboBox selectionChange="_comboChange" id="nfuCode" selectedKey="{noRefData>NfuCode}"-->
+    <!--  items="{ path: '/SalesItemDictionarySet', sorter: { path: 'Value' }, filters : [ { path : 'DictName', operator : 'EQ', value1 : 'NFU_CODE'} ] }">-->
+    <!--  <core:ListItem key="{Key}" text="{Value}" additionalText="{Key}"/>-->
+    <!--</ComboBox>-->
+    <!--<ComboBox selectionChange="_comboChange" id="inspCode" selectedKey="{noRefData>InspectionCode}"-->
+    <!--  items="{ path: '/SalesItemDictionarySet', sorter: { path: 'Value' }, filters : [ { path : 'DictName', operator : 'EQ', value1 : 'INSPECTION_CODE'} ] }">-->
+    <!--  <core:ListItem key="{Key}" text="{Value}" additionalText="{Key}"/>-->
+    <!--</ComboBox>-->
+  </cells>
+</ColumnListItem>

@@ -1,0 +1,48 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m" controllerName="cre.ret.app.controller.Object">
+<Table id="ADD_PROD_TBL" inset="true" busyIndicatorDelay="{objectView>/delay}" items="{addData>/addItems}" mode="Delete" delete="onAddProdDelete" visible="{= ${objectView>/addItems} > 0 ? true : false }">
+<headerToolbar>
+					<Toolbar>
+						<Title text="{i18n>ADD_PRODS} ({objectView>/addItems})" level="H2"/>
+						<ToolbarSpacer/>
+						<Text text="{i18n>TO_RETURN_ADD} : {objectView>/addReturnAmount} {i18n>PLN}"/>
+					</Toolbar>
+				</headerToolbar>
+				<columns>
+					<Column width="12em">
+						<Text text="{i18n>MAT_DESCR}"/>
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+						<Text text="{i18n>SER_NUM}"/>
+					</Column>
+					<Column minScreenWidth="Tablet" width="6em" demandPopin="true" hAlign="Center">
+						<Text text="{i18n>QUAN}"/>
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center" visible="false">
+						<Text text="{i18n>RET_REAS}"/>
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center" visible="false">
+						<Text text="{i18n>PMNT_METH}"/>
+					</Column>
+				</columns>
+<items>
+<ColumnListItem>
+	<cells>
+		<ObjectIdentifier title="{addData>ShortText}" text="{addData>Material}"/>
+		<Input id="addSerNr" value="{addData>Serialno}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest="onGetSNDialog"/>
+		<Input id="addQuan"
+			value="{ path: 'addData>PoQuan', type: 'sap.ui.model.odata.type.Decimal' , constraints:{ precision: 13, scale: 13 }, formatter: '.formatter.parseQuantity'}"
+			type="Number" description="{i18n>PC}" enabled="false" liveChange="_changeQty" valueStateText="{i18n>quantityErrorState}"/>
+		<ComboBox selectionChange="_reasonChange" enabled="false"  visible="false" selectedKey="{addData>RetReason}"
+			items="{ path: '/SalesItemDictionarySet', sorter: { path: 'Value' }, filters : [ { path : 'DictName', operator : 'EQ', value1 : 'RET_REASON'} ] }">
+			<core:ListItem key="{Key}" text="{Value}" additionalText="{Key}"/>
+		</ComboBox> 
+		<ComboBox enabled="false" selectionChange="_pmntmethChange" selectedKey="{addData>Zlsch}" visible="false"
+			items="{ path: '/SalesItemDictionarySet', sorter: { path: 'Value' }, filters : [ { path : 'DictName', operator : 'EQ', value1 : 'ZLSCH'} ] }">
+			<core:ListItem key="{Key}" text="{Value}" additionalText="{Key}"/>
+		</ComboBox>
+		<!--  enabled="{= ${ReturnDoc} || ${ParentMaterial} || ${ReturnNotAllowed} === true ? false : true }" -->
+	</cells>
+</ColumnListItem>
+</items>
+</Table>
+</core:FragmentDefinition>

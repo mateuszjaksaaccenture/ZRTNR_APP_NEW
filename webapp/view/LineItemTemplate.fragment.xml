@@ -1,0 +1,27 @@
+<ColumnListItem xmlns="sap.m" xmlns:core="sap.ui.core">
+	<cells>
+		<VBox>
+			<ObjectIdentifier title="{ShortText}" text="{Material}"/>
+			<ObjectStatus text="{Zzbundle}" state="Success"/>
+		</VBox>
+		<VBox visible="{ parts: ['ReturnDoc', 'NsStatus'], formatter: '.formatter.parseReturnDocVisibility'}">
+			<ObjectStatus text="{ parts: ['ReturnDocStatus', 'NsStatus'], formatter: '.formatter.parseReturnDocStatus'}" state="{ parts: ['ReturnDocStatus', 'NsStatus'], formatter: '.formatter.parseReturnDocStatusState'}"/>
+			<Text text="{ReturnDoc}"/>
+		</VBox>
+		
+		<Text text="{Serialno}"/>
+		<Input
+			value="{ path: 'AppQty', type: 'sap.ui.model.odata.type.Decimal' , constraints:{ precision: 13, scale: 13 }, formatter: '.formatter.parseQuantity'}"
+			type="Number" description="{i18n>PC}" enabled="{= ${Serialno} || ${PoQuan} === '1.000' || ${PoQuan} === '0.000' || ${ParentMaterial} ? false : true }" liveChange="_changeQty" valueStateText="{i18n>quantityErrorState}"/>
+		<!-- enabled="{= ${ReturnDoc} || ${ParentMaterial} || ${ReturnNotAllowed} || ${ReturnNotAllowedZtad} === true ? false : true }" -->
+		<ComboBox selectionChange="_reasonChange" enabled="false"
+			items="{ path: '/SalesItemDictionarySet', sorter: { path: 'Value' }, templateShareable : false , filters : [ { path : 'DictName', operator : 'EQ', value1 : 'RET_REASON'} ] }">
+			<core:ListItem key="{Key}" text="{Value}" additionalText="{Key}"/>
+		</ComboBox>
+		<ComboBox selectionChange="_pmntmethChange" enabled="false" selectedKey="{Zlsch}" visible="false"
+			items="{ path: '/SalesItemDictionarySet', sorter: { path: 'Value' }, templateShareable : false , filters : [ { path : 'DictName', operator : 'EQ', value1 : 'ZLSCH'} ] }">
+			<core:ListItem key="{Key}" text="{Value}" additionalText="{Key}"/>
+		</ComboBox>
+		<!--  enabled="{= ${ReturnDoc} || ${ParentMaterial} || ${ReturnNotAllowed} === true ? false : true }" -->
+	</cells>
+</ColumnListItem>

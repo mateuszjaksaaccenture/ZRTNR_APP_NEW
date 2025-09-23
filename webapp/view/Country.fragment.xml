@@ -1,0 +1,6 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<SelectDialog noDataText="{i18n>NoCountriesFound}" title="{i18n>selCountry}" search="_handleCountrySearch" confirm="_handleConfirm"
+		liveChange="_handleCountrySearch" items="{ path: '/CountrySet' }">
+		<StandardListItem title="{Landx}" description="{Land1}" icon="sap-icon://globe" iconDensityAware="false" iconInset="false" type="Active"/>
+	</SelectDialog>
+</core:FragmentDefinition>

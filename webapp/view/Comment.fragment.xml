@@ -1,0 +1,13 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Popover title="{ShortText}" class="sapUiContentPadding" placement="Left" initialFocus="email">
+		<footer>
+			<Toolbar>
+				<ToolbarSpacer/>
+				<Button id="closeBtn" text="{i18n>dialogCloseButtonText}" press="_handleCommentClose"/>
+			</Toolbar>
+		</footer>
+		<VBox justifyContent="Center" alignItems="Center">
+			<Text text="{TextLine}"/>
+		</VBox>
+	</Popover>
+</core:FragmentDefinition>

@@ -1,0 +1,13 @@
+<Dialog xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout" title="{i18n>AccountData}"
+	busy="{noRefView>/busy}" busyIndicatorDelay="{noRefView>/delay}">
+	<content>
+			<Label text="{i18n>AccountID}" required="true"/>
+			<Input value="{noRefData>/Iban}" maxLength="28" valueLiveUpdate="true" liveChange="_validateAccountData" valueStateText="{i18n>InvalidAccountID}"/>
+	</content>
+	<beginButton>
+		<Button text="{i18n>dialogSubmitButtonText}" press="onAccountSubmit" enabled="{noRefView>/enableAccount}"/>
+	</beginButton>
+	<endButton>
+			<Button text="{i18n>dialogCloseButtonText}" press="onIbanClose"/>
+	</endButton>
+</Dialog>

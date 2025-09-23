@@ -1,0 +1,80 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout">
+	<Dialog id="cust_dialog" title="{= ${objectView>/disposition} ? ${i18n>CustomerDataDispos} : ${i18n>CustomerData} }"
+		busy="{objectView>/busy}" busyIndicatorDelay="{objectView>/delay}">
+		<f:SimpleForm id="customerData" editable="true" visible="true" layout="ResponsiveGridLayout" labelSpanL="2" labelSpanM="2" emptySpanL="0"
+			emptySpanM="0" columnsL="2" columnsM="2" class="editableForm" minWidth="1024" maxContainerCols="2">
+			<f:content>
+				<!--<core:Title id="cust_data" text="Detial information"/>-->
+				<Label text="{i18n>INV_ID}" required="true"/>
+				<Input value="{= ${NoSapInvoice} === true ? ${i18n>noInv} : ${customer>/Invoice} }" maxLength="20" valueLiveUpdate="true"
+					liveChange="_validateSubmitEnablement" enabled="{= ${InvoiceIsExt} === true ? true : false}" valueState="{objectView>/requiredData}"
+					showValueStateMessage="false"/>
+				<Label text="{i18n>Name}" required="{= ${InvoiceIsExt} === true ? true : false}"/>
+				<Input value="{customer>/Name}" maxLength="40" valueLiveUpdate="true" liveChange="_validateSubmitEnablement"
+					valueState="{objectView>/requiredData}" showValueStateMessage="false"/>
+				<Label visible="false"/>
+				<Input value="{customer>/Name2}" maxLength="35" valueLiveUpdate="true" liveChange="_validateSubmitEnablement" showValueStateMessage="false"/>
+				<Label visible="false"/>
+				<Input value="{customer>/Name3}" maxLength="35" valueLiveUpdate="true" liveChange="_validateSubmitEnablement" showValueStateMessage="false"/>
+				<Label visible="false"/>
+				<Input value="{customer>/Name4}" maxLength="35" valueLiveUpdate="true" liveChange="_validateSubmitEnablement" showValueStateMessage="false"/>
+				<Label text="{i18n>Street}" required="false"/>
+				<Input value="{customer>/Street}" maxLength="60" valueLiveUpdate="true" liveChange="_validateSubmitEnablement">
+					<layoutData>
+						<l:GridData span="L2 M4 S8"/>
+					</layoutData>
+				</Input>
+				<Input value="{customer>/HouseNo}" maxLength="10" valueLiveUpdate="true" liveChange="_validateSubmitEnablement">
+					<layoutData>
+						<l:GridData span="L1 M2 S4"/>
+					</layoutData>
+				</Input>
+				<Label text="{i18n>PostCode}" required="{= ${InvoiceIsExt} === true ? true : false}"/>
+				<MaskInput value="{customer>/PostlCod1}" mask="99-999" placeholderSymbol="_" change="_validateSubmitEnablement"
+					valueState="{objectView>/requiredData}">
+					<layoutData>
+						<l:GridData span="L1 M2 S4"/>
+					</layoutData>
+				</MaskInput>
+				<Input value="{customer>/City}" maxLength="40" valueLiveUpdate="true" liveChange="_validateSubmitEnablement" showValueStateMessage="false"
+					valueState="{objectView>/requiredData}">
+					<layoutData>
+						<l:GridData span="L2 M4 S8"/>
+					</layoutData>
+				</Input>
+				<Label text="{i18n>Country}" required="{= ${InvoiceIsExt} === true ? true : false}"/>
+				<Input value="{customer>/Country}" maxLength="3" valueLiveUpdate="true" liveChange="_validateSubmitEnablement" valueHelpOnly="true"
+					valueHelpRequest="_countryHelpRequest" showValueHelp="true" valueState="{objectView>/requiredData}" showValueStateMessage="false"/>
+				<Label text="{i18n>TaxNum}"/>
+				<Input value="{customer>/Taxnumber1}" maxLength="10" valueLiveUpdate="true" liveChange="_validateSubmitEnablement" editable="{= ${objectView>/bussinessClient} === false }"/>
+				<Label text="{i18n>TelNum}"/>
+				<MaskInput value="{customer>/Tel1Numbr}" mask="999-999-999" placeholderSymbol="_"/>
+				<Label text="{i18n>Email}"/>
+				<Input value="{customer>/EMail}" maxLength="241" valueLiveUpdate="true" type="Email" liveChange=".formatter._validateEmail"
+					valueStateText="{i18n>EMAIL_UNVAL}"/>
+				<Label text="{i18n>AccountID}"
+					required="{parts:[{path : 'objectView>/zlsch'}, {path : 'objectView>/disposition'}, {path: 'objectView>/dispMethod'}], formatter:'.formatter.setFieldRequiredBasedOnMeth'}"
+					visible="{parts:[{path : 'objectView>/zlsch'}, {path : 'objectView>/disposition'}, {path: 'objectView>/dispMethod'}], formatter:'.formatter.setFieldRequiredBasedOnMeth'}"/>
+				<!--required="{= ${Zlsch} === '5' ? true : false}" visible="{= ${Zlsch} === '5' ? true : false}"/>-->
+				<Input id="accountId" value="{customer>/Iban}"
+					visible="{parts:[{path : 'objectView>/zlsch'}, {path : 'objectView>/disposition'}, {path: 'objectView>/dispMethod'}], formatter:'.formatter.setFieldRequiredBasedOnMeth'}"
+					maxLength="26" valueLiveUpdate="true" liveChange="_validateSubmitEnablement"/>
+				<Label text="{i18n>Remarks}"/>
+				<TextArea value="{customer>/Remarks}" wrapping="Soft" maxLength="200"/>
+				<!--  <Label text="{i18n>Poczet_FV}" visible="{= ${objectView>/dispMethod} === 'I' ? true : false}"/>
+				<TextArea value="{customer>/PoczetFvRemark}" wrapping="Soft" visible="{= ${Zlsch} === 'I' ? true : false}"/> -->
+			</f:content>
+		</f:SimpleForm>
+		<buttons>
+			<Button text="{i18n>DISP_PRINT}" visible="{objectView>/disposition}" press="onDispPrint"/>
+			<Button text="{i18n>RTRN_BTN}" press="onCustomerSubmit" enabled="{objectView>/enableSubmit}"/>
+			<Button text="{i18n>dialogCloseButtonText}" press="onCloseDialog"/>
+		</buttons>
+		<!--  <beginButton>
+			<Button text="{i18n>RTRN_BTN}" press="onCustomerSubmit" enabled="{objectView>/enableSubmit}"/>
+		</beginButton>
+		<endButton>
+			<Button text="{i18n>dialogCloseButtonText}" press="onCloseDialog"/>
+		</endButton> -->
+	</Dialog>
+</core:FragmentDefinition>
