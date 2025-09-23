@@ -281,7 +281,9 @@ sap.ui.define([
 					} else {
 						oViewModel.setProperty("/pmntDialogTitle", this.getResourceBundle().getText("SelectPmntMeth"));
 					}
-					this._openPmntDialog();
+					//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{
+					//this._openPmntDialog();
+					this._openBonDialog(); //}
 				}
 			}.bind(this);
 			var fnError = function(oError) {
