@@ -266,7 +266,12 @@ sap.ui.define([
 				if (oViewModel.getProperty("/ownPayment") > 0 && oData.Key === this._dispPmntProc) {
 					oViewModel.setProperty("/pmntDialogTitle", this.getResourceBundle().getText("SelectPmntMethDisp"));
 					this._openDispPmntDialog();
-				} else {
+				}
+				//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{}
+				else if( oViewModel.getProperty("/bonMethod") == '' ) {
+					this._openBonDialog();
+				} 
+				else {
 					if (oViewModel.getProperty("/noAccountDoc")) {
 						var fnHandlePmntMethod = function(sPmntMeth) {
 							this._handlePmntMethConfirm(null, true, sPmntMeth);
@@ -280,10 +285,8 @@ sap.ui.define([
 						oViewModel.setProperty("/pmntDialogTitle", this.getResourceBundle().getText("SelectPmntMethOwnPay"));
 					} else {
 						oViewModel.setProperty("/pmntDialogTitle", this.getResourceBundle().getText("SelectPmntMeth"));
-					}
-					//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{
-					//this._openPmntDialog();
-					this._openBonDialog(); //}
+					}					
+					this._openPmntDialog();					
 				}
 			}.bind(this);
 			var fnError = function(oError) {
