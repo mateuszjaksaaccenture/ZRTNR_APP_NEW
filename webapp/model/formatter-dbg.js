@@ -406,7 +406,7 @@ sap.ui.define([
 							if (element.Key === "WARNING") {
 								return element;
 							}
-						};
+						},
 						//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{
 						findBon = function(element) {
 							if (element.Key === "B") {
