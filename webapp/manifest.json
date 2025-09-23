@@ -109,6 +109,9 @@
             "dsipPmntMethods": {
                 "type": "sap.ui.model.json.JSONModel"
             },
+            "bonPmntMethods": {
+                "type": "sap.ui.model.json.JSONModel"
+            },            
             "": {
                 "dataSource": "mainService",
                 "settings": {
