@@ -9,7 +9,7 @@ sap.ui.define([
 		onInit: function() {
 			var oViewModel,
 				fnSetAppNotBusy,
-				mati2,
+				matiDbg,
 				iOriginalBusyDelay = this.getView().getBusyIndicatorDelay();
 
 			oViewModel = new JSONModel({
@@ -18,7 +18,7 @@ sap.ui.define([
 				ShopAvailable: true
 			});
 			this.setModel(oViewModel, "appView");
-				mati2 = '14';
+				matiDbg = 'D1';
 			fnSetAppNotBusy = function() {
 				oViewModel.setProperty("/busy", false);
 				oViewModel.setProperty("/delay", iOriginalBusyDelay);

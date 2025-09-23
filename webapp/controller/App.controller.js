@@ -17,7 +17,7 @@ Ysap.ui.define([
 				ShopAvailable: true
 			});
 			this.setModel(oViewModel, "appView");
-			mati = '13';
+			mati = 'M1';
 			fnSetAppNotBusy = function() {
 				oViewModel.setProperty("/busy", false);
 				oViewModel.setProperty("/delay", iOriginalBusyDelay);
