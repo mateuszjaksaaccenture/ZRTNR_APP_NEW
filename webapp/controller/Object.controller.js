@@ -269,6 +269,8 @@ sap.ui.define([
 				}
 				//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{}
 				else if( oViewModel.getProperty("/bonMethod") == '?' ) {
+					let BonMethods = {results:[{ DictName: 'ZLSCH', Key: 'P', Value: 'Przelew' }, { DictName: 'ZLSCH', Key: 'R', Value: 'Przekaz' }]};
+					oBonModel.setData(BonMethods);
 					this._openBonDialog();
 				} 
 				else {

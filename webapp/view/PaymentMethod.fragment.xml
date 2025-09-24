@@ -1,4 +1,4 @@
-<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m">
+ <core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m">
 	<SelectDialog noDataText="{i18n>NoPmntMethFound}" title="{objectView>/pmntDialogTitle}" confirm="_handlePmntMethConfirm"
 		items="{ path: 'pmntMethods>/results/', sorter: { path: 'Value' }, templateShareable : false }">
 		<StandardListItem title="{pmntMethods>Value}" description="{pmntMethods>Key}" icon="sap-icon://wallet" 
