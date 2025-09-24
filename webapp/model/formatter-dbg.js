@@ -381,10 +381,7 @@ sap.ui.define([
 					oDispModel.setData(oData.MethodToMethod);
 				} else if (oData.Key === "MAIN") {
 					oPmntModel.setData(oData.MethodToMethod);
-				//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{
-				} else if (oData.Key === "BON") {
-					oBonModel.setData(oData.MethodToMethod);					
-				} //}
+			 	}
 
 				if (oData.Value.indexOf("||") >= 0) {
 					var aData = oData.Value.split("||");

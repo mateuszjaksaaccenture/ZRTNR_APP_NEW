@@ -269,8 +269,17 @@ sap.ui.define([
 				}
 				//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{}
 				else if( oViewModel.getProperty("/bonMethod") == '?' ) {
-					let BonMethods = {results:[{ DictName: 'ZLSCH', Key: 'P', Value: 'Przelew' }, { DictName: 'ZLSCH', Key: 'R', Value: 'Przekaz' }]};
-					oBonModel.setData(BonMethods);
+					var bonMethods;
+					if(oViewModel.getProperty("/dispMethod") === "P") {
+						let bonMethods = {results:[{ DictName: 'ZLSCH', Key: 'P', Value: 'Przelew' }, { DictName: 'ZLSCH', Key: 'W', Value: 'Wypłata z kasy' }]};
+						oBonModel.setData(bonMethods);
+					} else if(oViewModel.getProperty("/dispMethod") === "R") {
+						let bonMethods = {results:[{ DictName: 'ZLSCH', Key: 'R', Value: 'Przekaz' }, { DictName: 'ZLSCH', Key: 'W', Value: 'Wypłata z kasy' }]};
+						oBonModel.setData(bonMethods);
+					} else if(oViewModel.getProperty("/dispMethod") === "I") {
+						let bonMethods = {results:[{ DictName: 'ZLSCH', Key: 'P', Value: 'Przelew' }, { DictName: 'ZLSCH', Key: 'R', Value: 'Przekaz' }, { DictName: 'ZLSCH', Key: 'W', Value: 'Wypłata z kasy' }]};
+						oBonModel.setData(bonMethods);
+					}
 					this._openBonDialog();
 				} 
 				else {
