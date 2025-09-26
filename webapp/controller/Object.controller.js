@@ -326,9 +326,9 @@ sap.ui.define([
 		},
 		//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{
 		_handleBonMethConfirm: function(oEvent) {
-			var sPmntMeth = oEvent.getParameter("selectedItem").getDescription(),
+			var sBonMeth = oEvent.getParameter("selectedItem").getDescription(),
 				oViewModel = this._oViewModel;
-			oViewModel.setProperty("/bonMethod", sPmntMeth);
+			oViewModel.setProperty("/bonMethod", sBonMeth);
 			this._getPmntMethods(this._mainPmntProc);
 		}, // }
 
@@ -342,7 +342,8 @@ sap.ui.define([
 				iToReturn = parseFloat(oViewModel.getProperty("/returnAmount")) + parseFloat(oViewModel.getProperty("/addReturnAmount")),
 				iOwnPayment = oViewModel.getProperty("/ownPayment") ? parseFloat(oViewModel.getProperty("/ownPayment")) : 0,
 				iShopBalance = oViewModel.getProperty("/shopBalance"),
-				iEmergFunds = oViewModel.getProperty("/emergencyFund");
+				iEmergFunds = oViewModel.getProperty("/emergencyFund"),
+				iBonMeth = oViewModel.getProperty("/bonMethod");
 			this.getModel("addData").setProperty("/Zlsch", sPmntMeth);
 			//12.04.18 PSy
 			//'P' or 'R' = IsDisposotion
@@ -352,7 +353,9 @@ sap.ui.define([
 			} //}
 			oViewModel.setProperty("/zlsch", sPmntMeth);
 			var fnReturn = function() {
-				this._getPmntMethods(this._mainPmntProc);
+				//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{
+				//this._getPmntMethods(this._mainPmntProc);
+				this._getPmntMethods(null); //}
 			}.bind(this);
 			var fnContinue = function(meth) {
 				this._handlePmntMethConfirm(null, true, meth);
@@ -364,7 +367,7 @@ sap.ui.define([
 					oViewModel.setProperty("/dispMethod", sPmntMeth);
 				}
 				oViewModel.setProperty("/dispoItemZlsch", sPmntMeth);
-				if (sPmntMeth === "W" &&
+				if (sPmntMeth === "W"  &&
 					((iOwnPayment > iShopBalance) ||
 						(iShopBalance > iOwnPayment && (iShopBalance - iOwnPayment < iEmergFunds))
 					)) {
@@ -372,7 +375,7 @@ sap.ui.define([
 					i18nProperty === "lowCashLevel" ? aTextAttr.push(iShopBalance, iEmergFunds) : aTextAttr.push(iShopBalance);
 				}
 			} else {
-				if (sPmntMeth === "W" &&
+				if (sPmntMeth === "W"  && 
 					((iToReturn > iShopBalance) ||
 						(iShopBalance > iToReturn && (iShopBalance - iToReturn < iEmergFunds))
 					)) {
@@ -380,6 +383,21 @@ sap.ui.define([
 					i18nProperty === "lowCashLevelNoRef" ? aTextAttr.push(iShopBalance, iEmergFunds) : aTextAttr.push(iShopBalance);
 				}
 			}
+				//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{
+				//sprawdz czy jesli zwrot za bon to czy jest odpowiednia ilość w kasie
+				if(!i18nProperty){
+					if (iBonMeth === "W" ){
+						if(iToReturn > iShopBalance) {
+							i18nProperty = "noCashNoRef";
+							aTextAttr.push(iShopBalance);
+						}
+						else if (iShopBalance > iToReturn && (iShopBalance - iToReturn < iEmergFunds)){
+							i18nProperty = "lowCashLevelNoRef";
+							aTextAttr.push(iShopBalance, iEmergFunds);
+						}
+					}			
+				} //}
+
 			sMessage = i18nProperty ? this.getResourceBundle().getText(i18nProperty, aTextAttr) : "";
 			if (i18nProperty && !bContinue) {
 				Utilities.lowCashLevelWarning(sMessage,
