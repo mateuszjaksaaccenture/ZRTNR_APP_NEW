@@ -2,6 +2,6 @@
 	<SelectDialog noDataText="{i18n>NoPmntMethFound}" title="{objectView>/pmntDialogTitle}" confirm="_handlePmntMethConfirm"
 		items="{ path: 'pmntMethods>/results/', sorter: { path: 'Value' }, templateShareable : false }">
 		<StandardListItem title="{pmntMethods>Value}" description="{pmntMethods>Key}" icon="sap-icon://wallet" 
-			iconDensityAware="false" iconInset="false" type="Active" visible="{= ${pmntMethods>Key} === 'M' || ${pmntMethods>Key} === 'E' || ${pmntMethods>Key} === 'B' || ${pmntMethods>Key} === Z' ? false : true }"/>
+			iconDensityAware="false" iconInset="false" type="Active" visible="{= ${pmntMethods>Key} === 'M' || ${pmntMethods>Key} === 'E' || ${pmntMethods>Key} === 'B' || ${pmntMethods>Key} === 'Z' ? false : true }"/>
 	</SelectDialog>
 </core:FragmentDefinition>
