@@ -343,7 +343,8 @@ sap.ui.define([
 				iOwnPayment = oViewModel.getProperty("/ownPayment") ? parseFloat(oViewModel.getProperty("/ownPayment")) : 0,
 				iShopBalance = oViewModel.getProperty("/shopBalance"),
 				iEmergFunds = oViewModel.getProperty("/emergencyFund"),
-				iBonMeth = oViewModel.getProperty("/bonMethod");
+				iBonMeth = oViewModel.getProperty("/bonMethod"); //P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{}
+				iReturnType = oViewModel.getProperty("/returnType"); //P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{}
 			this.getModel("addData").setProperty("/Zlsch", sPmntMeth);
 			//12.04.18 PSy
 			//'P' or 'R' = IsDisposotion
@@ -423,6 +424,7 @@ sap.ui.define([
 			this.getModel().setProperty(oContext.getPath() + "/Zlsch", sPmntMeth);
 			this.getModel().setProperty(oContext.getPath() + "/IsDisposition", oViewModel.getProperty("/disposition"));
 			this.getModel().setProperty(oContext.getPath() + "/ZZBONRETMETH", oViewModel.getProperty("/bonMethod")); //P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{}
+			this.getModel().setProperty(oContext.getPath() + "/returnType", oViewModel.getProperty("/returnType")); //P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{}
 			var aItemsData = this.getModel("addData").getData().addItems;
 			if (aItemsData && aItemsData.length > 0) {
 				for (var m = 0; m < aItemsData.length; m++) {

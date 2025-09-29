@@ -409,21 +409,35 @@ sap.ui.define([
 							if (element.Key === "B") {
 								return element;
 							}
+						},
+						findReturnType = function(element) {
+							if (element.Key === "Z") {
+								return element;
+							}
 						}; //}				
 
 					var oBalance = oData.MethodToMethod.results.find(findBalance),
 						oEmergBalance = oData.MethodToMethod.results.find(findEmergFunds),
 						oWarning = oData.MethodToMethod.results.find(checkWarning),
-						oBon = oData.MethodToMethod.results.find(findBon); //P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{}
+						oBon = oData.MethodToMethod.results.find(findBon), //P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{}
+						oReturnType = oData.MethodToMethod.results.find(findReturnType); //P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{}
 
 					oViewModel.setProperty("/emergencyFund", parseFloat(oEmergBalance.Value));
 					oViewModel.setProperty("/shopBalance", parseFloat(oBalance.Value));
 					oViewModel.setProperty("/noAccountDoc", oWarning ? true : false); 
+
+					//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{
 					if(oBon) {
 						oViewModel.setProperty("/bonMethod", oBon.Value);
 					}
 					else {
 						oViewModel.setProperty("/bonMethod", '');
+					}
+					if(oReturnType) {
+						oViewModel.setProperty("/returnType", oReturnType.Value);
+					}
+					else {
+						oViewModel.setProperty("/returnType", '');
 					}
 				}
 
