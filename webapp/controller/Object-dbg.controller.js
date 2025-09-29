@@ -422,6 +422,7 @@ sap.ui.define([
 			}
 			this.getModel().setProperty(oContext.getPath() + "/Zlsch", sPmntMeth);
 			this.getModel().setProperty(oContext.getPath() + "/IsDisposition", oViewModel.getProperty("/disposition"));
+			this.getModel().setProperty(oContext.getPath() + "/ZZBONRETMETH", oViewModel.getProperty("/bonMethod")); //P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{}
 			var aItemsData = this.getModel("addData").getData().addItems;
 			if (aItemsData && aItemsData.length > 0) {
 				for (var m = 0; m < aItemsData.length; m++) {
