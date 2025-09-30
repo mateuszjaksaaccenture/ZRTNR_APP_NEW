@@ -268,8 +268,7 @@ sap.ui.define([
 					this._openDispPmntDialog();
 				}
 				//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{}
-				else if( oViewModel.getProperty("/bonMethod") == '?' ) {
-					var bonMethods;
+				else if( oViewModel.getProperty("/bonMethodR") == '?' && ( oViewModel.getProperty("/dispMethod") === undefined || oViewModel.getProperty("/dispMethod") === '' )) {
 					if(oViewModel.getProperty("/dispMethod") === "P") {
 						let bonMethods = {results:[{ DictName: 'ZLSCH', Key: 'P', Value: 'Przelew' }, { DictName: 'ZLSCH', Key: 'W', Value: 'Wypłata z kasy' }]};
 						oBonModel.setData(bonMethods);
@@ -332,6 +331,7 @@ sap.ui.define([
 			var sBonMeth = oEvent.getParameter("selectedItem").getDescription(),
 				oViewModel = this._oViewModel;
 			oViewModel.setProperty("/bonMethod", sBonMeth);
+			oViewModel.setProperty("/bonMethodR", "");
 			this._getPmntMethods(this._mainPmntProc);
 		}, // }
 

@@ -428,10 +428,10 @@ sap.ui.define([
 
 					//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{
 					if(oBon) {
-						oViewModel.setProperty("/bonMethod", oBon.Value);
+						oViewModel.setProperty("/bonMethodR", oBon.Value);
 					}
 					else {
-						oViewModel.setProperty("/bonMethod", '');
+						oViewModel.setProperty("/bonMethodR", '');
 					}
 					if(oReturnType) {
 						oViewModel.setProperty("/returnType", oReturnType.Value);
