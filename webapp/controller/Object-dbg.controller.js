@@ -279,6 +279,9 @@ sap.ui.define([
 					} else if(oViewModel.getProperty("/dispMethod") === "I") {
 						let bonMethods = {results:[{ DictName: 'ZLSCH', Key: 'P', Value: 'Przelew' }, { DictName: 'ZLSCH', Key: 'R', Value: 'Przekaz' }, { DictName: 'ZLSCH', Key: 'W', Value: 'Wypłata z kasy' }]};
 						oBonModel.setData(bonMethods);
+					} else {
+						let bonMethods = {results:[{ DictName: 'ZLSCH', Key: 'P', Value: 'Przelew' }, { DictName: 'ZLSCH', Key: 'R', Value: 'Przekaz' }, { DictName: 'ZLSCH', Key: 'W', Value: 'Wypłata z kasy' }]};
+						oBonModel.setData(bonMethods);						
 					}
 					this._openBonDialog();
 				} 
@@ -344,7 +347,6 @@ sap.ui.define([
 				iShopBalance = oViewModel.getProperty("/shopBalance"),
 				iEmergFunds = oViewModel.getProperty("/emergencyFund"),
 				iBonMeth = oViewModel.getProperty("/bonMethod"); //P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{}
-				iReturnType = oViewModel.getProperty("/returnType"); //P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{}
 			this.getModel("addData").setProperty("/Zlsch", sPmntMeth);
 			//12.04.18 PSy
 			//'P' or 'R' = IsDisposotion
