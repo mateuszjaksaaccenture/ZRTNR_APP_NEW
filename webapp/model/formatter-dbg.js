@@ -505,13 +505,13 @@ sap.ui.define([
 
 		},
 
-		setFieldRequiredBasedOnMeth: function(sPmntMeth, bDisposition, sDispoMeth) {
+		setFieldRequiredBasedOnMeth: function(sPmntMeth, bDisposition, sDispoMeth, sBonMeth) {
 			var bRequired;
 			//BOC 19.02.2019 PSy Added '5' to IBAN field
 			if (bDisposition) {
-				bRequired = (sPmntMeth === "P" || sDispoMeth === "P" || sPmntMeth === "5" || sDispoMeth === "5") ? true : false;
+				bRequired = (sPmntMeth === "P" || sDispoMeth === "P" || sPmntMeth === "5" || sDispoMeth === "5" || sBonMeth === 'P') ? true : false;
 			} else {
-				bRequired = (sPmntMeth === "P" || sPmntMeth === "5") ? true : false;
+				bRequired = (sPmntMeth === "P" || sPmntMeth === "5" || sBonMeth === 'P') ? true : false;
 			}
 
 			return bRequired;
