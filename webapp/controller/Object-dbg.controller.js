@@ -214,6 +214,14 @@ sap.ui.define([
 		},
 		onMethodPress: function() {
 			var oView = this.getView();
+			//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{
+			//czyszczenie zmiennych
+			this._oViewModel.setProperty("/bonMethod", "");
+			this._oViewModel.setProperty("/bonMethodR", "");
+			this._oViewModel.setProperty("/returnType", "");
+			this._oViewModel.setProperty("/dispMethod",""); //}
+
+
 			if (validation._validateCombo(this._oLineTable.getSelectedItems()) === false) {
 				var bCompact = !!oView.$().closest(".sapUiSizeCompact").length;
 				MessageBox.error(this.getResourceBundle().getText("validationError"), {
@@ -267,7 +275,7 @@ sap.ui.define([
 					oViewModel.setProperty("/pmntDialogTitle", this.getResourceBundle().getText("SelectPmntMethDisp"));
 					this._openDispPmntDialog();
 				}
-				//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{}
+				//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{
 				else if( oViewModel.getProperty("/bonMethodR") == '?' && ( oViewModel.getProperty("/bonMethod") === undefined || oViewModel.getProperty("/bonMethod") === '' )) {
 					if(oViewModel.getProperty("/dispMethod") === "P") {
 						let bonMethods = {results:[{ DictName: 'ZLSCH', Key: 'P', Value: 'Przelew' }, { DictName: 'ZLSCH', Key: 'W', Value: 'Wypłata z kasy' }]};
@@ -282,7 +290,7 @@ sap.ui.define([
 						let bonMethods = {results:[{ DictName: 'ZLSCH', Key: 'P', Value: 'Przelew' }, { DictName: 'ZLSCH', Key: 'R', Value: 'Przekaz' }, { DictName: 'ZLSCH', Key: 'W', Value: 'Wypłata z kasy' }]};
 						oBonModel.setData(bonMethods);						
 					}
-					this._openBonDialog();
+					this._openBonDialog();  //}
 				} 
 				else {
 					if (oViewModel.getProperty("/noAccountDoc")) {

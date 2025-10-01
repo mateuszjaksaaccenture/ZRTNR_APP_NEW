@@ -53,11 +53,11 @@
 				<Input value="{customer>/EMail}" maxLength="241" valueLiveUpdate="true" type="Email" liveChange=".formatter._validateEmail"
 					valueStateText="{i18n>EMAIL_UNVAL}"/>
 				<Label text="{i18n>AccountID}"
-					required="{parts:[{path : 'objectView>/zlsch'}, {path : 'objectView>/disposition'}, {path: 'objectView>/dispMethod'}], formatter:'.formatter.setFieldRequiredBasedOnMeth'}"
-					visible="{parts:[{path : 'objectView>/zlsch'}, {path : 'objectView>/disposition'}, {path: 'objectView>/dispMethod'}], formatter:'.formatter.setFieldRequiredBasedOnMeth'}"/>
+					required="{parts:[{path : 'objectView>/zlsch'}, {path : 'objectView>/disposition'}, {path: 'objectView>/dispMethod'}, {path: 'objectView>/bonMethod'}], formatter:'.formatter.setFieldRequiredBasedOnMeth'}"
+					visible="{parts:[{path : 'objectView>/zlsch'}, {path : 'objectView>/disposition'}, {path: 'objectView>/dispMethod'}, {path: 'objectView>/bonMethod'}], formatter:'.formatter.setFieldRequiredBasedOnMeth'}"/>
 				<!--required="{= ${Zlsch} === '5' ? true : false}" visible="{= ${Zlsch} === '5' ? true : false}"/>-->
 				<Input id="accountId" value="{customer>/Iban}"
-					visible="{parts:[{path : 'objectView>/zlsch'}, {path : 'objectView>/disposition'}, {path: 'objectView>/dispMethod'}], formatter:'.formatter.setFieldRequiredBasedOnMeth'}"
+					visible="{parts:[{path : 'objectView>/zlsch'}, {path : 'objectView>/disposition'}, {path: 'objectView>/dispMethod'}, {path: 'objectView>/bonMethod'}], formatter:'.formatter.setFieldRequiredBasedOnMeth'}"
 					maxLength="26" valueLiveUpdate="true" liveChange="_validateSubmitEnablement"/>
 				<Label text="{i18n>Remarks}"/>
 				<TextArea value="{customer>/Remarks}" wrapping="Soft" maxLength="200"/>
