@@ -218,6 +218,7 @@ sap.ui.define([
 			//czyszczenie zmiennych
 			this._oViewModel.setProperty("/bonMethod", "");
 			this._oViewModel.setProperty("/bonMethodR", "");
+			this._oViewModel.setProperty("/returnType", "");
 			this._oViewModel.setProperty("/dispMethod",""); //}
 
 
@@ -321,7 +322,9 @@ sap.ui.define([
 			this._getSelectedData();
 			//      }
 			if (this.aDocToItems || aMeths) {
-				var oDeepData = formatter._fillDeepDataForPmnts(this.aDocToItems, aMeths, oViewModel.getProperty("/dispMethod"));
+				//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{
+				//var oDeepData = formatter._fillDeepDataForPmnts(this.aDocToItems, aMeths, oViewModel.getProperty("/dispMethod"));
+				var oDeepData = formatter._fillDeepDataForPmnts(this.aDocToItems, aMeths, oViewModel.getProperty("/dispMethod"), oViewModel.getProperty("/bonMethod")); //}
 				oViewModel.setProperty("/busy", true);
 				oViewModel.setProperty("/dispoPrint", false);
 				Utilities.readPaymentMethods(oDeepData, fnSuccess, fnError);

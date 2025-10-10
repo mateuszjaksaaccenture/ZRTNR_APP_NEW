@@ -352,7 +352,7 @@ sap.ui.define([
 			return oDeepPayload;
 		},
 
-		_fillDeepDataForPmnts: function(aSelectedItems, aPmntMethods, sPmntMeth) {
+		_fillDeepDataForPmnts: function(aSelectedItems, aPmntMethods, sPmntMeth, sBonMeth) {
 			var aMethods = aPmntMethods ? aPmntMethods : [{
 				DictName: "ZLSCH",
 				Key: "",
@@ -365,10 +365,20 @@ sap.ui.define([
 				Serialno: ""
 			}];
 
+			//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{
+			var lv_sPmntMeth;
+			if(sPmntMeth){
+				lv_sPmntMeth = sPmntMeth;
+			}else if(sBonMeth){
+				lv_sPmntMeth = "BONBYL";
+			} //}
+
 			return {
 				DictName: "ZLSCH",
 				Key: aPmntMethods ? "MAIN" : "DISP",
-				Value: aPmntMethods ? sPmntMeth : "",
+				//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{
+				//Value: aPmntMethods ? sPmntMeth : "",
+				Value: aPmntMethods ? lv_sPmntMeth : "",
 				MethodToItem: aItems,
 				MethodToMethod: aMethods
 			};
