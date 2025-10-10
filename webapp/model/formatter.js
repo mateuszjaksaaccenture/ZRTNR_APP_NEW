@@ -367,9 +367,7 @@ sap.ui.define([
 
 			//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{
 			var lv_sPmntMeth;
-			if(sPmntMeth){
-				lv_sPmntMeth = sPmntMeth;
-			}else if(sBonMeth){
+			if(sBonMeth){
 				lv_sPmntMeth = "BONBYL";
 			} //}
 
@@ -378,7 +376,7 @@ sap.ui.define([
 				Key: aPmntMethods ? "MAIN" : "DISP",
 				//P2S-SD-PROJ: [CR_CORPO-1152] Zwroty Remoon startmj{
 				//Value: aPmntMethods ? sPmntMeth : "",
-				Value: aPmntMethods ? lv_sPmntMeth : "",
+				Value: aPmntMethods ? sPmntMeth : lv_sPmntMeth,
 				MethodToItem: aItems,
 				MethodToMethod: aMethods
 			};
